@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Ventures | Settings</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+:root{
+    --bg:#06130c;
+    --panel:#0b1c13;
+    --panel2:#0d2116;
+    --border:#193626;
+    --text:#fff;
+    --muted:#84958b;
+    --green:#4ade80;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    transition:.25s;
+}
+
+/* LIGHT THEME */
+
+body.light{
+    --bg:#f5f7f6;
+    --panel:#fff;
+    --panel2:#eef3ef;
+    --border:#d7e0da;
+    --text:#152019;
+    --muted:#647269;
+    --green:#15803d;
+}
+
+/* HEADER */
+
+.header{
+    height:65px;
+    background:var(--panel2);
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+}
+
+.menu-btn,
+.notification{
+    width:42px;
+    height:42px;
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    background:var(--panel);
+    color:var(--text);
+
+    font-size:20px;
+    cursor:pointer;
+}
+
+.logo{
+    color:var(--green);
+    font-size:21px;
+    font-weight:bold;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:270px;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:-280px;
+
+    background:var(--panel2);
+    border-right:1px solid var(--border);
+
+    z-index:2000;
+    transition:.3s;
+    overflow-y:auto;
+}
+
+.sidebar.open{
+    left:0;
+}
+
+.sidebar-head{
+    height:65px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    border-bottom:1px solid var(--border);
+}
+
+.close-btn{
+    background:none;
+    border:0;
+    color:var(--muted);
+    font-size:25px;
+    cursor:pointer;
+}
+
+.user-box{
+    margin:18px;
+    padding:15px;
+
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+}
+
+.user-box strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.user-box span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.menu{
+    padding:8px 12px;
+}
+
+.menu-title{
+    color:var(--muted);
+    font-size:11px;
+    margin:15px 8px 8px;
+    text-transform:uppercase;
+}
+
+.menu button{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    gap:13px;
+
+    padding:13px 12px;
+    margin-bottom:4px;
+
+    border:0;
+    border-radius:10px;
+
+    background:transparent;
+    color:var(--text);
+
+    cursor:pointer;
+    text-align:left;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:var(--panel);
+    color:var(--green);
+}
+
+.logout{
+    color:#ef4444 !important;
+}
+
+/* OVERLAY */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+
+    display:none;
+    z-index:1500;
+}
+
+.overlay.show{
+    display:block;
+}
+
+/* MAIN */
+
+.main{
+    max-width:900px;
+    margin:auto;
+    padding:95px 18px 45px;
+}
+
+.title{
+    margin-bottom:22px;
+}
+
+.title h1{
+    font-size:30px;
+    margin-bottom:7px;
+}
+
+.title p{
+    color:var(--muted);
+}
+
+/* SETTINGS CARDS */
+
+.card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:20px;
+    margin-bottom:16px;
+}
+
+.card h2{
+    font-size:18px;
+    margin-bottom:7px;
+}
+
+.card-description{
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:18px;
+}
+
+/* THEME */
+
+.theme-options{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.theme{
+    padding:16px 10px;
+
+    border:1px solid var(--border);
+    border-radius:12px;
+
+    background:var(--panel2);
+    color:var(--text);
+
+    cursor:pointer;
+    text-align:center;
+}
+
+.theme:hover,
+.theme.selected{
+    border-color:var(--green);
+}
+
+.theme-icon{
+    display:block;
+    font-size:25px;
+    margin-bottom:8px;
+}
+
+.theme small{
+    color:var(--muted);
+}
+
+/* SETTINGS ROW */
+
+.setting-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:15px 0;
+
+    border-bottom:1px solid var(--border);
+}
+
+.setting-row:last-child{
+    border-bottom:0;
+}
+
+.setting-info strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.setting-info span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* BUTTON */
+
+.action{
+    padding:11px 16px;
+
+    border:0;
+    border-radius:9px;
+
+    background:var(--green);
+    color:#fff;
+
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.secondary{
+    background:var(--panel2);
+    color:var(--text);
+    border:1px solid var(--border);
+}
+
+.danger{
+    background:#7f1d1d;
+    color:#fff;
+}
+
+/* TOGGLE */
+
+.switch{
+    position:relative;
+    width:48px;
+    height:26px;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+
+    background:#526158;
+    border-radius:30px;
+    cursor:pointer;
+}
+
+.slider:before{
+    content:"";
+
+    position:absolute;
+
+    width:20px;
+    height:20px;
+
+    left:3px;
+    top:3px;
+
+    background:white;
+    border-radius:50%;
+
+    transition:.2s;
+}
+
+.switch input:checked + .slider{
+    background:#16a34a;
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(22px);
+}
+
+/* MESSAGE */
+
+.message{
+    color:var(--green);
+    font-size:13px;
+    margin-top:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+    .theme-options{
+        grid-template-columns:1fr;
+    }
+
+    .setting-row{
+        align-items:flex-start;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <button
+        class="menu-btn"
+        onclick="openMenu()">
+        ☰
+    </button>
+
+    <div class="logo">
+        ventures.com
+    </div>
+
+    <button
+        class="notification"
+        onclick="goDashboard()">
+        🔔
+    </button>
+
+</header>
+
+
+<!-- SIDEBAR -->
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
+    <div class="sidebar-head">
+
+        <div class="logo">
+            Ventures
+        </div>
+
+        <button
+            class="close-btn"
+            onclick="closeMenu()">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="user-box">
+
+        <strong id="sideName">
+            Loading...
+        </strong>
+
+        <span id="sideEmail">
+            Loading...
+        </span>
+
+    </div>
+
+
+    <div class="menu">
+
+        <div class="menu-title">
+            Main
+        </div>
+
+        <button onclick="goDashboard()">
+            🏠 Dashboard
+        </button>
+
+        <button onclick="goSurveys()">
+            📋 Surveys
+        </button>
+
+
+        <div class="menu-title">
+            Money
+        </div>
+
+        <button onclick="goWallet()">
+            💰 Wallet
+        </button>
+
+        <button onclick="goEarnings()">
+            📈 Earnings
+        </button>
+
+        <button onclick="goWithdraw()">
+            💳 Withdraw
+        </button>
+
+
+        <div class="menu-title">
+            Rewards
+        </div>
+
+        <button onclick="goDashboard()">
+            🎁 Bonuses
+        </button>
+
+        <button onclick="goDashboard()">
+            👥 Referrals
+        </button>
+
+
+        <div class="menu-title">
+            Account
+        </div>
+
+        <button onclick="goDashboard()">
+            🔔 Notifications
+        </button>
+
+        <button onclick="goDashboard()">
+            👤 Profile
+        </button>
+
+        <button class="active">
+            ⚙️ Settings
+        </button>
+
+
+        <div class="menu-title">
+            Support
+        </div>
+
+        <button onclick="goDashboard()">
+            🆘 Help & Support
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()">
+            🚪 Logout
+        </button>
+
+    </div>
+
+</aside>
+
+
+<div
+    class="overlay"
+    id="overlay"
+    onclick="closeMenu()">
+</div>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="title">
+
+        <h1>
+            Settings ⚙️
+        </h1>
+
+        <p>
+            Customize your Ventures account.
+        </p>
+
+    </div>
+
+
+    <!-- APPEARANCE -->
+
+    <section class="card">
+
+        <h2>
+            Appearance 🎨
+        </h2>
+
+        <p class="card-description">
+            Choose how Ventures looks on your device.
+        </p>
+
+
+        <div class="theme-options">
+
+            <button
+                class="theme"
+                id="darkTheme"
+                onclick="setTheme('dark')">
+
+                <span class="theme-icon">
+                    🌙
+                </span>
+
+                Dark
+
+                <br>
+
+                <small>
+                    Dark interface
+                </small>
+
+            </button>
+
+
+            <button
+                class="theme"
+                id="lightTheme"
+                onclick="setTheme('light')">
+
+                <span class="theme-icon">
+                    ☀️
+                </span>
+
+                White
+
+                <br>
+
+                <small>
+                    Light interface
+                </small>
+
+            </button>
+
+
+            <button
+                class="theme"
+                id="systemTheme"
+                onclick="setTheme('system')">
+
+                <span class="theme-icon">
+                    📱
+                </span>
+
+                Default
+
+                <br>
+
+                <small>
+                    Device preference
+                </small>
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACCOUNT -->
+
+    <section class="card">
+
+        <h2>
+            Account
+        </h2>
+
+        <p class="card-description">
+            Manage your Ventures account.
+        </p>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <strong>
+                    Profile
+                </strong>
+
+                <span>
+                    View and manage your profile.
+                </span>
+
+            </div>
+
+            <button
+                class="action secondary"
+                onclick="goProfile()">
+
+                Open
+
+            </button>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <strong>
+                    Change Password
+                </strong>
+
+                <span>
+                    Update your account password.
+                </span>
+
+            </div>
+
+            <button
+                class="action secondary"
+                onclick="changePassword()">
+
+                Change
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- NOTIFICATIONS -->
+
+    <section class="card">
+
+        <h2>
+            Notifications 🔔
+        </h2>
+
+        <p class="card-description">
+            Control account notifications.
+        </p>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <strong>
+                    Survey Notifications
+                </strong>
+
+                <span>
+                    Get notified about eligible surveys.
+                </span>
+
+            </div>
+
+            <label class="switch">
+
+                <input
+                    type="checkbox"
+                    id="surveyNotifications"
+                    checked
+                    onchange="saveNotifications()">
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <strong>
+                    Earnings Notifications
+                </strong>
+
+                <span>
+                    Receive updates about rewards.
+                </span>
+
+            </div>
+
+            <label class="switch">
+
+                <input
+                    type="checkbox"
+                    id="earningNotifications"
+                    checked
+                    onchange="saveNotifications()">
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+        <div
+            class="message"
+            id="settingsMessage">
+        </div>
+
+    </section>
+
+
+    <!-- SECURITY -->
+
+    <section class="card">
+
+        <h2>
+            Security 🔐
+        </h2>
+
+        <p class="card-description">
+            Keep your account secure.
+        </p>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <strong>
+                    JWT Session
+                </strong>
+
+                <span>
+                    Your authenticated session is stored
+                    locally and sent securely to the backend.
+                </span>
+
+            </div>
+
+            <span style="color:#4ade80;">
+                ● Active
+            </span>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <strong>
+                    Sign Out
+                </strong>
+
+                <span>
+                    End your current Ventures session.
+                </span>
+
+            </div>
+
+            <button
+                class="action danger"
+                onclick="logout()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script>
+
+/* =========================================
+   MENU
+========================================= */
+
+function openMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.add("open");
+
+    document
+        .getElementById("overlay")
+        .classList.add("show");
+
+}
+
+
+function closeMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+    document
+        .getElementById("overlay")
+        .classList.remove("show");
+
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function goDashboard(){
+    window.location.href="/dashboard.html";
+}
+
+function goSurveys(){
+    window.location.href="/surveys.html";
+}
+
+function goWallet(){
+    window.location.href="/wallet.html";
+}
+
+function goEarnings(){
+    window.location.href="/earnings.html";
+}
+
+function goWithdraw(){
+    window.location.href="/withdraw.html";
+}
+
+function goProfile(){
+    window.location.href="/profile.html";
+}
+
+
+/* =========================================
+   THEME
+========================================= */
+
+function setTheme(theme){
+
+    localStorage.setItem(
+        "ventures_theme",
+        theme
+    );
+
+    applyTheme();
+
+}
+
+
+/* APPLY THEME */
+
+function applyTheme(){
+
+    const theme =
+        localStorage.getItem(
+            "ventures_theme"
+        ) || "dark";
+
+
+    document
+        .body
+        .classList
+        .remove("light");
+
+
+    if(theme === "light"){
+
+        document
+            .body
+            .classList
+            .add("light");
+
+    }
+
+
+    if(theme === "system"){
+
+        if(
+            window.matchMedia(
+                "(prefers-color-scheme: light)"
+            ).matches
+        ){
+
+            document
+                .body
+                .classList
+                .add("light");
+
+        }
+
+    }
+
+
+    document
+        .querySelectorAll(".theme")
+        .forEach(function(button){
+
+            button.classList.remove(
+                "selected"
+            );
+
+        });
+
+
+    const selected =
+        document.getElementById(
+            theme + "Theme"
+        );
+
+
+    if(selected){
+
+        selected.classList.add(
+            "selected"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   NOTIFICATIONS
+========================================= */
+
+function saveNotifications(){
+
+    const survey =
+        document
+        .getElementById(
+            "surveyNotifications"
+        ).checked;
+
+    const earnings =
+        document
+        .getElementById(
+            "earningNotifications"
+        ).checked;
+
+
+    localStorage.setItem(
+        "ventures_survey_notifications",
+        survey
+    );
+
+    localStorage.setItem(
+        "ventures_earning_notifications",
+        earnings
+    );
+
+
+    document
+        .getElementById(
+            "settingsMessage"
+        )
+        .textContent =
+            "Settings saved.";
+
+}
+
+
+/* =========================================
+   LOAD SETTINGS
+========================================= */
+
+function loadSettings(){
+
+    const survey =
+        localStorage.getItem(
+            "ventures_survey_notifications"
+        );
+
+    const earnings =
+        localStorage.getItem(
+            "ventures_earning_notifications"
+        );
+
+
+    if(survey !== null){
+
+        document
+            .getElementById(
+                "surveyNotifications"
+            ).checked =
+                survey === "true";
+
+    }
+
+
+    if(earnings !== null){
+
+        document
+            .getElementById(
+                "earningNotifications"
+            ).checked =
+                earnings === "true";
+
+    }
+
+}
+
+
+/* =========================================
+   PASSWORD
+========================================= */
+
+function changePassword(){
+
+    window.location.href =
+        "/forgot-password.html";
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "ventures_token"
+    );
+
+    window.location.href =
+        "/login.html";
+
+}
+
+
+/* =========================================
+   USER
+========================================= */
+
+async function loadUser(){
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+
+    if(!token){
+
+        window.location.href =
+            "/login.html";
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/auth/me",
+                {
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if(!response.ok){
+
+            logout();
+            return;
+
+        }
+
+
+        const data =
+            await response.json();
+
+        const user =
+            data.user || data;
+
+
+        document
+            .getElementById("sideName")
+            .textContent =
+                user.name || "User";
+
+
+        document
+            .getElementById("sideEmail")
+            .textContent =
+                user.email || "";
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================================
+   SYSTEM THEME CHANGE
+========================================= */
+
+window
+    .matchMedia(
+        "(prefers-color-scheme: light)"
+    )
+    .addEventListener(
+        "change",
+        function(){
+
+            const theme =
+                localStorage.getItem(
+                    "ventures_theme"
+                );
+
+            if(theme === "system"){
+                applyTheme();
+            }
+
+        }
+    );
+
+
+/* START */
+
+applyTheme();
+
+loadSettings();
+
+loadUser();
+
+</script>
+
+</body>
+  </html>
