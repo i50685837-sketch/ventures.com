@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Ventures | Earnings</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#06130c;
+    color:#fff;
+    min-height:100vh;
+}
+
+.header{
+    height:65px;
+    background:#0a1b12;
+    border-bottom:1px solid #193626;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+
+    z-index:1000;
+}
+
+.menu-btn{
+    width:42px;
+    height:42px;
+
+    border:0;
+    border-radius:10px;
+
+    background:#11281a;
+    color:#fff;
+
+    font-size:22px;
+    cursor:pointer;
+}
+
+.logo{
+    color:#4ade80;
+    font-size:21px;
+    font-weight:bold;
+}
+
+.notification{
+    width:40px;
+    height:40px;
+
+    border:1px solid #264532;
+    border-radius:10px;
+
+    background:#0d2116;
+    color:#fff;
+
+    cursor:pointer;
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+    width:270px;
+
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:-280px;
+
+    background:#08180f;
+    border-right:1px solid #1a3827;
+
+    z-index:2000;
+
+    transition:.3s;
+    overflow-y:auto;
+}
+
+.sidebar.open{
+    left:0;
+}
+
+.sidebar-head{
+    height:65px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    border-bottom:1px solid #1a3827;
+}
+
+.close-btn{
+    background:none;
+    border:0;
+
+    color:#aaa;
+    font-size:23px;
+
+    cursor:pointer;
+}
+
+.user-box{
+    margin:18px;
+
+    padding:15px;
+
+    background:#0d2116;
+
+    border:1px solid #1d3b29;
+
+    border-radius:14px;
+}
+
+.user-box strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.user-box span{
+    color:#7f9186;
+    font-size:12px;
+}
+
+.menu{
+    padding:8px 12px;
+}
+
+.menu-title{
+    color:#607368;
+    font-size:11px;
+
+    margin:15px 8px 8px;
+
+    text-transform:uppercase;
+}
+
+.menu button{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+
+    gap:13px;
+
+    padding:13px 12px;
+
+    margin-bottom:4px;
+
+    border:0;
+    border-radius:10px;
+
+    background:transparent;
+    color:#c6d0ca;
+
+    cursor:pointer;
+    text-align:left;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:#12301d;
+    color:#4ade80;
+}
+
+.logout{
+    color:#f87171 !important;
+}
+
+
+/* OVERLAY */
+
+.overlay{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.55);
+
+    display:none;
+
+    z-index:1500;
+}
+
+.overlay.show{
+    display:block;
+}
+
+
+/* MAIN */
+
+.main{
+    max-width:1100px;
+
+    margin:auto;
+
+    padding:95px 18px 45px;
+}
+
+
+/* TITLE */
+
+.title{
+    margin-bottom:22px;
+}
+
+.title h1{
+    font-size:30px;
+    margin-bottom:7px;
+}
+
+.title p{
+    color:#84958b;
+}
+
+
+/* EARNING HERO */
+
+.earning-card{
+    background:
+        radial-gradient(
+            circle at top right,
+            #1b6135,
+            transparent 45%
+        ),
+        #0c2115;
+
+    border:1px solid #1d4a2b;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    margin-bottom:18px;
+}
+
+.earning-label{
+    color:#a5b5ab;
+    font-size:13px;
+}
+
+.total{
+    font-size:38px;
+    font-weight:bold;
+
+    margin:10px 0 5px;
+}
+
+.earning-sub{
+    color:#82a08d;
+    font-size:13px;
+}
+
+
+/* STATS */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+
+    margin-bottom:28px;
+}
+
+.stat{
+    background:#0b1c13;
+
+    border:1px solid #193626;
+
+    border-radius:16px;
+
+    padding:18px;
+}
+
+.stat small{
+    color:#7f9186;
+}
+
+.stat h2{
+    margin-top:8px;
+}
+
+.green{
+    color:#4ade80;
+}
+
+.yellow{
+    color:#eab308;
+}
+
+
+/* SECTION */
+
+.section-title{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    margin:25px 0 14px;
+}
+
+.section-title h2{
+    font-size:20px;
+}
+
+
+/* HISTORY */
+
+.history{
+    background:#0b1c13;
+
+    border:1px solid #193626;
+
+    border-radius:17px;
+
+    overflow:hidden;
+}
+
+.earning-row{
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    padding:17px;
+
+    border-bottom:1px solid #162d20;
+}
+
+.earning-row:last-child{
+    border-bottom:0;
+}
+
+.left{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.icon{
+    width:43px;
+    height:43px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#102a19;
+
+    border-radius:11px;
+
+    font-size:20px;
+}
+
+.name{
+    font-weight:bold;
+}
+
+.date{
+    color:#718278;
+    font-size:11px;
+
+    margin-top:4px;
+}
+
+.amount{
+    color:#4ade80;
+    font-weight:bold;
+}
+
+.empty{
+    padding:32px;
+
+    text-align:center;
+
+    color:#718278;
+}
+
+
+/* DAILY */
+
+.daily{
+    margin-top:20px;
+
+    padding:18px;
+
+    background:#0b1c13;
+
+    border:1px solid #193626;
+
+    border-radius:15px;
+
+    color:#8b9d92;
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .total{
+        font-size:31px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <button
+        class="menu-btn"
+        onclick="openMenu()">
+        ☰
+    </button>
+
+    <div class="logo">
+        ventures.com
+    </div>
+
+    <button
+        class="notification"
+        onclick="goDashboard()">
+        🔔
+    </button>
+
+</header>
+
+
+<!-- SIDEBAR -->
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
+    <div class="sidebar-head">
+
+        <div class="logo">
+            Ventures
+        </div>
+
+        <button
+            class="close-btn"
+            onclick="closeMenu()">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="user-box">
+
+        <strong id="sideName">
+            Loading...
+        </strong>
+
+        <span id="sideEmail">
+            Loading...
+        </span>
+
+    </div>
+
+
+    <div class="menu">
+
+        <div class="menu-title">
+            Main
+        </div>
+
+        <button onclick="goDashboard()">
+            🏠 Dashboard
+        </button>
+
+        <button onclick="goSurveys()">
+            📋 Surveys
+        </button>
+
+
+        <div class="menu-title">
+            Money
+        </div>
+
+        <button onclick="goWallet()">
+            💰 Wallet
+        </button>
+
+        <button class="active">
+            📈 Earnings
+        </button>
+
+        <button onclick="goWithdraw()">
+            💳 Withdraw
+        </button>
+
+
+        <div class="menu-title">
+            Rewards
+        </div>
+
+        <button onclick="goDashboard()">
+            🎁 Bonuses
+        </button>
+
+        <button onclick="goDashboard()">
+            👥 Referrals
+        </button>
+
+
+        <div class="menu-title">
+            Account
+        </div>
+
+        <button onclick="goDashboard()">
+            🔔 Notifications
+        </button>
+
+        <button onclick="goDashboard()">
+            👤 Profile
+        </button>
+
+        <button onclick="goDashboard()">
+            ⚙️ Settings
+        </button>
+
+
+        <div class="menu-title">
+            Support
+        </div>
+
+        <button onclick="goDashboard()">
+            🆘 Help & Support
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()">
+            🚪 Logout
+        </button>
+
+    </div>
+
+</aside>
+
+
+<div
+    class="overlay"
+    id="overlay"
+    onclick="closeMenu()">
+</div>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+    <div class="title">
+
+        <h1>
+            My Earnings 📈
+        </h1>
+
+        <p>
+            Track the rewards you've earned
+            from Ventures surveys.
+        </p>
+
+    </div>
+
+
+    <!-- TOTAL -->
+
+    <div class="earning-card">
+
+        <div class="earning-label">
+            Total Earnings
+        </div>
+
+        <div class="total">
+            KES <span id="totalEarned">
+                0.00
+            </span>
+        </div>
+
+        <div class="earning-sub">
+            Lifetime survey earnings
+        </div>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <small>
+                Available
+            </small>
+
+            <h2 class="green">
+                KES
+                <span id="balance">
+                    0.00
+                </span>
+            </h2>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                Pending
+            </small>
+
+            <h2 class="yellow">
+                KES
+                <span id="pending">
+                    0.00
+                </span>
+            </h2>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                Surveys Completed
+            </small>
+
+            <h2 id="completed">
+                0
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- HISTORY -->
+
+    <div class="section-title">
+
+        <h2>
+            Earnings History
+        </h2>
+
+    </div>
+
+
+    <div
+        class="history"
+        id="history">
+
+        <div class="empty">
+            Loading earnings...
+        </div>
+
+    </div>
+
+
+    <div class="daily">
+
+        📋 <strong>How earnings work</strong><br><br>
+
+        Complete an eligible survey and submit
+        the required answers. After the backend
+        verifies the completion, the corresponding
+        reward is recorded in your Ventures
+        earnings history.
+
+    </div>
+
+
+</main>
+
+
+<script>
+
+/* =========================================
+   MENU
+========================================= */
+
+function openMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.add("open");
+
+    document
+        .getElementById("overlay")
+        .classList.add("show");
+
+}
+
+
+function closeMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+    document
+        .getElementById("overlay")
+        .classList.remove("show");
+
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function goDashboard(){
+
+    window.location.href =
+        "/dashboard.html";
+
+}
+
+function goSurveys(){
+
+    window.location.href =
+        "/surveys.html";
+
+}
+
+function goWallet(){
+
+    window.location.href =
+        "/wallet.html";
+
+}
+
+function goWithdraw(){
+
+    window.location.href =
+        "/withdraw.html";
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "ventures_token"
+    );
+
+    window.location.href =
+        "/login.html";
+
+}
+
+
+/* =========================================
+   LOAD EARNINGS
+========================================= */
+
+async function loadEarnings(){
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+
+    if(!token){
+
+        window.location.href =
+            "/login.html";
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/earnings",
+                {
+                    method:"GET",
+
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if(!response.ok){
+
+            if(response.status === 401){
+
+                logout();
+
+                return;
+
+            }
+
+            throw new Error(
+                "Unable to load earnings"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if(data.totalEarned !== undefined){
+
+            document
+                .getElementById("totalEarned")
+                .textContent =
+                    Number(data.totalEarned)
+                    .toFixed(2);
+
+        }
+
+
+        if(data.balance !== undefined){
+
+            document
+                .getElementById("balance")
+                .textContent =
+                    Number(data.balance)
+                    .toFixed(2);
+
+        }
+
+
+        if(data.pending !== undefined){
+
+            document
+                .getElementById("pending")
+                .textContent =
+                    Number(data.pending)
+                    .toFixed(2);
+
+        }
+
+
+        if(data.completedSurveys !== undefined){
+
+            document
+                .getElementById("completed")
+                .textContent =
+                    data.completedSurveys;
+
+        }
+
+
+        renderHistory(
+            data.history ||
+            data.transactions ||
+            []
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        document
+            .getElementById("history")
+            .innerHTML = `
+                <div class="empty">
+                    Unable to load earnings.
+                    Please try again later.
+                </div>
+            `;
+
+    }
+
+}
+
+
+/* =========================================
+   HISTORY
+========================================= */
+
+function renderHistory(items){
+
+    const container =
+        document.getElementById(
+            "history"
+        );
+
+
+    if(!items.length){
+
+        container.innerHTML = `
+            <div class="empty">
+
+                No earnings yet.
+
+                <br><br>
+
+                Complete your first survey
+                to start earning.
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    items
+        .slice(0,20)
+        .forEach(function(item){
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "earning-row";
+
+
+            const title =
+                item.surveyName ||
+                item.name ||
+                "Survey Reward";
+
+
+            const amount =
+                Number(item.amount || 0)
+                .toFixed(2);
+
+
+            const date =
+                item.createdAt
+                ? new Date(item.createdAt)
+                    .toLocaleString()
+                : "Recent";
+
+
+            row.innerHTML = `
+
+                <div class="left">
+
+                    <div class="icon">
+                        📋
+                    </div>
+
+                    <div>
+
+                        <div class="name">
+                            ${escapeHTML(title)}
+                        </div>
+
+                        <div class="date">
+                            ${escapeHTML(date)}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="amount">
+                    + KES ${amount}
+                </div>
+
+            `;
+
+
+            container.appendChild(row);
+
+        });
+
+}
+
+
+/* =========================================
+   SAFE HTML
+========================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   LOAD USER
+========================================= */
+
+async function loadUser(){
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+
+    if(!token){
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/auth/me",
+                {
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if(!response.ok){
+
+            logout();
+
+            return;
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const user =
+            data.user || data;
+
+
+        document
+            .getElementById("sideName")
+            .textContent =
+                user.name || "User";
+
+
+        document
+            .getElementById("sideEmail")
+            .textContent =
+                user.email || "";
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+loadUser();
+
+loadEarnings();
+
+</script>
+
+</body>
+      </html>
