@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ventures | Dashboard</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#06130c;
+    color:#fff;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+    height:65px;
+    background:#0a1b12;
+    border-bottom:1px solid #193626;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+
+    z-index:1000;
+}
+
+.menu-btn{
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#11281a;
+    color:#fff;
+
+    font-size:22px;
+
+    cursor:pointer;
+}
+
+.logo{
+    color:#4ade80;
+    font-size:21px;
+    font-weight:bold;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.notification{
+    width:40px;
+    height:40px;
+
+    border-radius:10px;
+    border:1px solid #264532;
+
+    background:#0d2116;
+    color:#fff;
+
+    cursor:pointer;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:270px;
+    position:fixed;
+
+    top:0;
+    bottom:0;
+    left:-280px;
+
+    background:#08180f;
+    border-right:1px solid #1a3827;
+
+    z-index:2000;
+
+    transition:.3s;
+
+    overflow-y:auto;
+}
+
+.sidebar.open{
+    left:0;
+}
+
+.sidebar-head{
+    height:65px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    border-bottom:1px solid #1a3827;
+}
+
+.close-btn{
+    border:none;
+    background:none;
+    color:#aaa;
+
+    font-size:22px;
+    cursor:pointer;
+}
+
+.user-box{
+    margin:18px;
+
+    padding:15px;
+
+    background:#0d2116;
+
+    border:1px solid #1d3b29;
+
+    border-radius:14px;
+}
+
+.user-box strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.user-box span{
+    color:#7f9186;
+    font-size:12px;
+}
+
+.menu{
+    padding:8px 12px;
+}
+
+.menu-title{
+    color:#607368;
+    font-size:11px;
+    margin:15px 8px 8px;
+    text-transform:uppercase;
+}
+
+.menu button{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    gap:13px;
+
+    padding:13px 12px;
+
+    margin-bottom:4px;
+
+    border:none;
+    border-radius:10px;
+
+    background:transparent;
+    color:#c6d0ca;
+
+    cursor:pointer;
+
+    text-align:left;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:#12301d;
+    color:#4ade80;
+}
+
+.logout{
+    color:#f87171 !important;
+}
+
+/* OVERLAY */
+
+.overlay{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.55);
+
+    display:none;
+
+    z-index:1500;
+}
+
+.overlay.show{
+    display:block;
+}
+
+/* MAIN */
+
+.main{
+    padding:90px 18px 40px;
+
+    max-width:1200px;
+
+    margin:auto;
+}
+
+/* WELCOME */
+
+.welcome{
+    margin-bottom:25px;
+}
+
+.welcome h1{
+    font-size:28px;
+    margin-bottom:7px;
+}
+
+.welcome p{
+    color:#84958b;
+}
+
+/* BALANCE */
+
+.balance-card{
+    background:
+        radial-gradient(
+            circle at top right,
+            #1a6135,
+            transparent 45%
+        ),
+        #0c2115;
+
+    border:1px solid #1d4a2b;
+
+    border-radius:20px;
+
+    padding:24px;
+
+    margin-bottom:18px;
+}
+
+.balance-label{
+    color:#9aac9f;
+    font-size:13px;
+}
+
+.balance{
+    font-size:34px;
+    font-weight:bold;
+
+    margin:9px 0 18px;
+}
+
+.balance-actions{
+    display:flex;
+    gap:10px;
+}
+
+.balance-actions button{
+    flex:1;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+.withdraw{
+    background:#16a34a;
+    color:white;
+}
+
+.deposit{
+    background:#163522;
+    color:#d9fbe3;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+
+    margin-bottom:30px;
+}
+
+.stat{
+    background:#0b1c13;
+
+    border:1px solid #193626;
+
+    border-radius:16px;
+
+    padding:18px;
+}
+
+.stat small{
+    color:#7f9186;
+}
+
+.stat h3{
+    margin-top:8px;
+    font-size:20px;
+}
+
+/* SECTION */
+
+.section-head{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:14px;
+}
+
+.section-head h2{
+    font-size:20px;
+}
+
+.view{
+    color:#4ade80;
+    font-size:13px;
+    cursor:pointer;
+}
+
+/* SURVEYS */
+
+.surveys{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+}
+
+.survey{
+    background:#0b1c13;
+
+    border:1px solid #193626;
+
+    border-radius:17px;
+
+    padding:19px;
+
+    position:relative;
+}
+
+.survey-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    margin-bottom:12px;
+}
+
+.survey-icon{
+    font-size:27px;
+}
+
+.reward{
+    color:#4ade80;
+
+    font-weight:bold;
+
+    font-size:15px;
+}
+
+.survey h3{
+    margin-bottom:7px;
+}
+
+.survey p{
+    color:#83958a;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+    margin-bottom:15px;
+}
+
+.survey-info{
+    display:flex;
+
+    gap:15px;
+
+    color:#8fa096;
+
+    font-size:12px;
+
+    margin-bottom:15px;
+}
+
+.start{
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#16a34a;
+
+    color:#fff;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.start:hover{
+    background:#15803d;
+}
+
+.locked{
+    border-color:#3a3020;
+}
+
+.locked .start{
+    background:#29251c;
+    color:#d4b76a;
+}
+
+/* ACTIVITY */
+
+.activity{
+    margin-top:30px;
+}
+
+.activity-card{
+    background:#0b1c13;
+
+    border:1px solid #193626;
+
+    border-radius:16px;
+
+    overflow:hidden;
+}
+
+.activity-row{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:16px;
+
+    border-bottom:1px solid #162d20;
+}
+
+.activity-row:last-child{
+    border-bottom:none;
+}
+
+.activity-name{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.activity-name span{
+    color:#87988e;
+    font-size:12px;
+}
+
+.plus{
+    color:#4ade80;
+}
+
+.pending{
+    color:#eab308;
+}
+
+/* PAGES */
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+/* SIMPLE PAGE */
+
+.simple-card{
+    background:#0b1c13;
+    border:1px solid #193626;
+    border-radius:18px;
+    padding:22px;
+    margin-top:20px;
+}
+
+.simple-card p{
+    color:#899a90;
+    margin-top:10px;
+    line-height:1.6;
+}
+
+.form-input{
+    width:100%;
+    padding:13px;
+
+    margin-top:12px;
+
+    border-radius:10px;
+
+    border:1px solid #294334;
+
+    background:#07110b;
+
+    color:white;
+}
+
+.action{
+    width:100%;
+
+    padding:13px;
+
+    margin-top:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#16a34a;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .surveys{
+        grid-template-columns:1fr;
+    }
+
+    .balance{
+        font-size:30px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <button
+        class="menu-btn"
+        onclick="openMenu()">
+        ☰
+    </button>
+
+    <div class="logo">
+        ventures.com
+    </div>
+
+    <div class="header-right">
+
+        <button
+            class="notification"
+            onclick="showPage('notifications')">
+            🔔
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-head">
+
+        <div class="logo">
+            Ventures
+        </div>
+
+        <button
+            class="close-btn"
+            onclick="closeMenu()">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="user-box">
+
+        <strong id="sideName">
+            Loading...
+        </strong>
+
+        <span id="sideEmail">
+            Loading...
+        </span>
+
+    </div>
+
+
+    <div class="menu">
+
+        <div class="menu-title">
+            Main
+        </div>
+
+        <button
+            class="active"
+            onclick="showPage('dashboard')">
+            🏠 Dashboard
+        </button>
+
+        <button
+            onclick="showPage('surveys')">
+            📋 Surveys
+        </button>
+
+
+        <div class="menu-title">
+            Money
+        </div>
+
+        <button
+            onclick="showPage('wallet')">
+            💰 Wallet
+        </button>
+
+        <button
+            onclick="showPage('earnings')">
+            📈 Earnings
+        </button>
+
+        <button
+            onclick="showPage('withdraw')">
+            💳 Withdraw
+        </button>
+
+
+        <div class="menu-title">
+            Rewards
+        </div>
+
+        <button
+            onclick="showPage('bonuses')">
+            🎁 Bonuses
+        </button>
+
+        <button
+            onclick="showPage('referrals')">
+            👥 Referrals
+        </button>
+
+
+        <div class="menu-title">
+            Account
+        </div>
+
+        <button
+            onclick="showPage('notifications')">
+            🔔 Notifications
+        </button>
+
+        <button
+            onclick="showPage('profile')">
+            👤 Profile
+        </button>
+
+        <button
+            onclick="showPage('settings')">
+            ⚙️ Settings
+        </button>
+
+
+        <div class="menu-title">
+            Support
+        </div>
+
+        <button
+            onclick="showPage('support')">
+            🆘 Help & Support
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()">
+            🚪 Logout
+        </button>
+
+    </div>
+
+</aside>
+
+
+<div
+    class="overlay"
+    id="overlay"
+    onclick="closeMenu()">
+</div>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+<!-- DASHBOARD -->
+
+<section
+    id="dashboard"
+    class="page active">
+
+    <div class="welcome">
+
+        <h1>
+            Welcome back,
+            <span id="userName">
+                User
+            </span>
+            👋
+        </h1>
+
+        <p>
+            Complete surveys and earn rewards.
+        </p>
+
+    </div>
+
+
+    <div class="balance-card">
+
+        <div class="balance-label">
+            Available Balance
+        </div>
+
+        <div class="balance">
+            KES <span id="balance">
+                0.00
+            </span>
+        </div>
+
+        <div class="balance-actions">
+
+            <button
+                class="withdraw"
+                onclick="showPage('withdraw')">
+                Withdraw
+            </button>
+
+            <button
+                class="deposit"
+                onclick="showPage('earnings')">
+                View Earnings
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <small>
+                Total Earned
+            </small>
+
+            <h3>
+                KES <span id="totalEarned">
+                    0.00
+                </span>
+            </h3>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                Pending
+            </small>
+
+            <h3>
+                KES <span id="pending">
+                    0.00
+                </span>
+            </h3>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                Surveys Completed
+            </small>
+
+            <h3 id="completed">
+                0
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-head">
+
+        <h2>
+            Available Surveys
+        </h2>
+
+        <span
+            class="view"
+            onclick="showPage('surveys')">
+            View all
+        </span>
+
+    </div>
+
+
+    <div class="surveys">
+
+        <!-- SURVEY 1 -->
+
+        <div class="survey">
+
+            <div class="survey-top">
+
+                <div class="survey-icon">
+                    🛒
+                </div>
+
+                <div class="reward">
+                    KES 150
+                </div>
+
+            </div>
+
+            <h3>
+                Shopping Habits
+            </h3>
+
+            <p>
+                Tell us about your shopping
+                preferences and habits.
+            </p>
+
+            <div class="survey-info">
+                <span>⏱ 5 min</span>
+                <span>❓ 5 questions</span>
+            </div>
+
+            <button
+                class="start"
+                onclick="startSurvey('shopping')">
+                Start Survey →
+            </button>
+
+        </div>
+
+
+        <!-- SURVEY 2 -->
+
+        <div class="survey">
+
+            <div class="survey-top">
+
+                <div class="survey-icon">
+                    📱
+                </div>
+
+                <div class="reward">
+                    KES 180
+                </div>
+
+            </div>
+
+            <h3>
+                Mobile & Apps
+            </h3>
+
+            <p>
+                Share your experiences with
+                mobile applications.
+            </p>
+
+            <div class="survey-info">
+                <span>⏱ 7 min</span>
+                <span>❓ 7 questions</span>
+            </div>
+
+            <button
+                class="start"
+                onclick="startSurvey('mobile')">
+                Start Survey →
+            </button>
+
+        </div>
+
+
+        <!-- SURVEY 3 -->
+
+        <div class="survey">
+
+            <div class="survey-top">
+
+                <div class="survey-icon">
+                    🍔
+                </div>
+
+                <div class="reward">
+                    KES 200
+                </div>
+
+            </div>
+
+            <h3>
+                Food Preferences
+            </h3>
+
+            <p>
+                Tell us about your food
+                preferences and choices.
+            </p>
+
+            <div class="survey-info">
+                <span>⏱ 8 min</span>
+                <span>❓ 8 questions</span>
+            </div>
+
+            <button
+                class="start"
+                onclick="startSurvey('food')">
+                Start Survey →
+            </button>
+
+        </div>
+
+
+        <!-- SURVEY 4 -->
+
+        <div class="survey">
+
+            <div class="survey-top">
+
+                <div class="survey-icon">
+                    🎮
+                </div>
+
+                <div class="reward">
+                    KES 250
+                </div>
+
+            </div>
+
+            <h3>
+                Entertainment
+            </h3>
+
+            <p>
+                Share your entertainment
+                preferences and habits.
+            </p>
+
+            <div class="survey-info">
+                <span>⏱ 10 min</span>
+                <span>❓ 10 questions</span>
+            </div>
+
+            <button
+                class="start"
+                onclick="startSurvey('entertainment')">
+                Start Survey →
+            </button>
+
+        </div>
+
+
+        <!-- PREMIUM -->
+
+        <div class="survey locked">
+
+            <div class="survey-top">
+
+                <div class="survey-icon">
+                    🏦
+                </div>
+
+                <div class="reward">
+                    KES 350
+                </div>
+
+            </div>
+
+            <h3>
+                Finance Research 🔒
+            </h3>
+
+            <p>
+                Higher-value research survey
+                for eligible accounts.
+            </p>
+
+            <div class="survey-info">
+                <span>⏱ 12 min</span>
+                <span>🔒 Premium</span>
+            </div>
+
+            <button
+                class="start"
+                onclick="premiumSurvey()">
+                🔒 Eligibility Required
+            </button>
+
+        </div>
+
+
+        <div class="survey locked">
+
+            <div class="survey-top">
+
+                <div class="survey-icon">
+                    🚗
+                </div>
+
+                <div class="reward">
+                    KES 450
+                </div>
+
+            </div>
+
+            <h3>
+                Transport Study 🔒
+            </h3>
+
+            <p>
+                Research survey about
+                transportation experiences.
+            </p>
+
+            <div class="survey-info">
+                <span>⏱ 15 min</span>
+                <span>🔒 Premium</span>
+            </div>
+
+            <button
+                class="start"
+                onclick="premiumSurvey()">
+                🔒 Eligibility Required
+            </button>
+
+        </div>
+
+
+        <div class="survey locked">
+
+            <div class="survey-top">
+
+                <div class="survey-icon">
+                    💻
+                </div>
+
+                <div class="reward">
+                    KES 600
+                </div>
+
+            </div>
+
+            <h3>
+                Technology Research 🔒
+            </h3>
+
+            <p>
+                Research about technology
+                and digital services.
+            </p>
+
+            <div class="survey-info">
+                <span>⏱ 18 min</span>
+                <span>🔒 Premium</span>
+            </div>
+
+            <button
+                class="start"
+                onclick="premiumSurvey()">
+                🔒 Eligibility Required
+            </button>
+
+        </div>
+
+
+        <div class="survey locked">
+
+            <div class="survey-top">
+
+                <div class="survey-icon">
+                    🌱
+                </div>
+
+                <div class="reward">
+                    KES 750
+                </div>
+
+            </div>
+
+            <h3>
+                Environment Study 🔒
+            </h3>
+
+            <p>
+                Share your environmental
+                awareness and habits.
+            </p>
+
+            <div class="survey-info">
+                <span>⏱ 20 min</span>
+                <span>🔒 Premium</span>
+            </div>
+
+            <button
+                class="start"
+                onclick="premiumSurvey()">
+                🔒 Eligibility Required
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTIVITY -->
+
+    <div class="activity">
+
+        <div class="section-head">
+
+            <h2>
+                Recent Activity
+            </h2>
+
+        </div>
+
+        <div class="activity-card">
+
+            <div class="activity-row">
+
+                <div class="activity-name">
+                    📋
+                    <div>
+                        No survey activity
+                        <br>
+                        <span>
+                            Complete your first survey
+                        </span>
+                    </div>
+                </div>
+
+                <span>
+                    —
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SURVEYS PAGE -->
+
+<section
+    id="surveys"
+    class="page">
+
+    <div class="welcome">
+
+        <h1>
+            Surveys 📋
+        </h1>
+
+        <p>
+            Complete available surveys to earn.
+        </p>
+
+    </div>
+
+    <div class="surveys">
+
+        <!-- JS can populate this later -->
+
+    </div>
+
+</section>
+
+
+<!-- WALLET -->
+
+<section
+    id="wallet"
+    class="page">
+
+    <div class="welcome">
+
+        <h1>
+            Wallet 💰
+        </h1>
+
+        <p>
+            Manage your Ventures earnings.
+        </p>
+
+    </div>
+
+    <div class="simple-card">
+
+        <h2>
+            Available Balance
+        </h2>
+
+        <h1>
+            KES <span id="walletBalance">
+                0.00
+            </span>
+        </h1>
+
+        <p>
+            Your available rewards will appear
+            here after successful survey completion.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- EARNINGS -->
+
+<section
+    id="earnings"
+    class="page">
+
+    <div class="welcome">
+
+        <h1>
+            Earnings 📈
+        </h1>
+
+        <p>
+            Track your survey earnings.
+        </p>
+
+    </div>
+
+    <div class="simple-card">
+
+        <h2>
+            Total Earnings
+        </h2>
+
+        <h1>
+            KES 0.00
+        </h1>
+
+        <p>
+            Your earnings history will appear
+            here.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- WITHDRAW -->
+
+<section
+    id="withdraw"
+    class="page">
+
+    <div class="welcome">
+
+        <h1>
+            Withdraw 💳
+        </h1>
+
+        <p>
+            Request a withdrawal from your
+            available balance.
+        </p>
+
+    </div>
+
+    <div class="simple-card">
+
+        <h2>
+            Withdrawal Amount
+        </h2>
+
+        <input
+            class="form-input"
+            type="number"
+          
