@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Ventures | Login</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:#06130c;
+    color:#fff;
+}
+
+.container{
+    width:100%;
+    max-width:430px;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo h1{
+    font-size:32px;
+}
+
+.logo span{
+    color:#4ade80;
+}
+
+.logo p{
+    margin-top:7px;
+    color:#91a39a;
+    font-size:14px;
+}
+
+.card{
+    background:#0b1c13;
+    border:1px solid #193626;
+    border-radius:22px;
+    padding:28px 24px;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:25px;
+    background:#06130c;
+    padding:5px;
+    border-radius:12px;
+}
+
+.tabs button{
+    flex:1;
+    border:0;
+    padding:12px;
+    border-radius:9px;
+    background:transparent;
+    color:#91a39a;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.tabs button.active{
+    background:#4ade80;
+    color:#06130c;
+}
+
+.form{
+    display:none;
+}
+
+.form.active{
+    display:block;
+}
+
+h2{
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#91a39a;
+    font-size:13px;
+    margin-bottom:22px;
+}
+
+.field{
+    margin-bottom:16px;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    margin-bottom:7px;
+    color:#b7c6bd;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border-radius:11px;
+    border:1px solid #234632;
+    background:#07170e;
+    color:white;
+    outline:none;
+}
+
+input:focus{
+    border-color:#4ade80;
+}
+
+button.submit{
+    width:100%;
+    border:0;
+    padding:14px;
+    border-radius:11px;
+    background:#4ade80;
+    color:#06130c;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:5px;
+}
+
+button.submit:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.forgot{
+    text-align:right;
+    margin:4px 0 18px;
+}
+
+.forgot button{
+    background:none;
+    border:0;
+    color:#4ade80;
+    cursor:pointer;
+}
+
+.message{
+    display:none;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:16px;
+    font-size:13px;
+}
+
+.message.show{
+    display:block;
+}
+
+.message.success{
+    background:#12351f;
+    color:#86efac;
+}
+
+.message.error{
+    background:#351313;
+    color:#fca5a5;
+}
+
+.back{
+    background:none;
+    border:0;
+    color:#4ade80;
+    cursor:pointer;
+    margin-bottom:18px;
+}
+
+.terms{
+    font-size:12px;
+    color:#7f9187;
+    margin:15px 0;
+    line-height:1.5;
+}
+
+.terms input{
+    width:auto;
+    margin-right:5px;
+}
+
+.footer{
+    text-align:center;
+    margin-top:18px;
+    color:#718278;
+    font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <h1>Ventures<span>.</span>com</h1>
+        <p>Earn money by completing surveys</p>
+    </div>
+
+    <div class="card">
+
+        <div id="message" class="message"></div>
+
+        <!-- TABS -->
+
+        <div class="tabs" id="tabs">
+
+            <button
+                id="loginTab"
+                class="active"
+                onclick="showForm('login')">
+                Login
+            </button>
+
+            <button
+                id="registerTab"
+                onclick="showForm('register')">
+                Register
+            </button>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <form
+            id="loginForm"
+            class="form active"
+            onsubmit="loginUser(event)">
+
+            <h2>Welcome back 👋</h2>
+
+            <p class="subtitle">
+                Login to continue earning with Ventures.
+            </p>
+
+            <div class="field">
+
+                <label>Email</label>
+
+                <input
+                    id="loginEmail"
+                    type="email"
+                    placeholder="you@example.com"
+                    required>
+
+            </div>
+
+            <div class="field">
+
+                <label>Password</label>
+
+                <input
+                    id="loginPassword"
+                    type="password"
+                    placeholder="Your password"
+                    required>
+
+            </div>
+
+            <div class="forgot">
+
+                <button
+                    type="button"
+                    onclick="showForm('forgot')">
+                    Forgot password?
+                </button>
+
+            </div>
+
+            <button
+                id="loginButton"
+                class="submit"
+                type="submit">
+                Login
+            </button>
+
+        </form>
+
+
+        <!-- REGISTER -->
+
+        <form
+            id="registerForm"
+            class="form"
+            onsubmit="registerUser(event)">
+
+            <h2>Create your account 🚀</h2>
+
+            <p class="subtitle">
+                Join Ventures and start completing surveys.
+            </p>
+
+            <div class="field">
+
+                <label>Full name</label>
+
+                <input
+                    id="registerName"
+                    type="text"
+                    placeholder="Your full name"
+                    required>
+
+            </div>
+
+            <div class="field">
+
+                <label>Email</label>
+
+                <input
+                    id="registerEmail"
+                    type="email"
+                    placeholder="you@example.com"
+                    required>
+
+            </div>
+
+            <div class="field">
+
+                <label>Password</label>
+
+                <input
+                    id="registerPassword"
+                    type="password"
+                    minlength="6"
+                    placeholder="At least 6 characters"
+                    required>
+
+            </div>
+
+            <div class="field">
+
+                <label>Referral code (optional)</label>
+
+                <input
+                    id="referralCode"
+                    type="text"
+                    placeholder="VENTXXXX">
+
+            </div>
+
+            <div class="terms">
+
+                <label>
+                    <input
+                        id="terms"
+                        type="checkbox"
+                        required>
+
+                    I agree to the Ventures terms and conditions.
+                </label>
+
+            </div>
+
+            <button
+                id="registerButton"
+                class="submit"
+                type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+
+        <!-- FORGOT PASSWORD -->
+
+        <form
+            id="forgotForm"
+            class="form"
+            onsubmit="forgotPassword(event)">
+
+            <button
+                type="button"
+                class="back"
+                onclick="showForm('login')">
+                ← Back to login
+            </button>
+
+            <h2>Reset password</h2>
+
+            <p class="subtitle">
+                Enter your email to request a password reset.
+            </p>
+
+            <div class="field">
+
+                <label>Email</label>
+
+                <input
+                    id="forgotEmail"
+                    type="email"
+                    placeholder="you@example.com"
+                    required>
+
+            </div>
+
+            <button
+                id="forgotButton"
+                class="submit"
+                type="submit">
+                Request Reset
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="footer">
+        © 2026 Ventures.com
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   API
+========================================= */
+
+const API = "/api";
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(message, type = "error") {
+
+    const box =
+        document.getElementById("message");
+
+    box.textContent = message;
+
+    box.className =
+        "message show " + type;
+
+}
+
+
+/* =========================================
+   CLEAR MESSAGE
+========================================= */
+
+function clearMessage() {
+
+    const box =
+        document.getElementById("message");
+
+    box.className = "message";
+
+    box.textContent = "";
+
+}
+
+
+/* =========================================
+   FORM SWITCHER
+========================================= */
+
+function showForm(type) {
+
+    clearMessage();
+
+    const forms = [
+        "login",
+        "register",
+        "forgot"
+    ];
+
+    forms.forEach(name => {
+
+        const form =
+            document.getElementById(
+                name + "Form"
+            );
+
+        if (form) {
+
+            form.classList.toggle(
+                "active",
+                name === type
+            );
+
+        }
+
+    });
+
+
+    const tabs =
+        document.getElementById("tabs");
+
+    tabs.style.display =
+        type === "forgot"
+            ? "none"
+            : "flex";
+
+
+    document
+        .getElementById("loginTab")
+        .classList.toggle(
+            "active",
+            type === "login"
+        );
+
+
+    document
+        .getElementById("registerTab")
+        .classList.toggle(
+            "active",
+            type === "register"
+        );
+
+}
+
+
+/* =========================================
+   REGISTER
+========================================= */
+
+async function registerUser(event) {
+
+    event.preventDefault();
+
+    clearMessage();
+
+    const button =
+        document.getElementById(
+            "registerButton"
+        );
+
+    button.disabled = true;
+
+    button.textContent =
+        "Creating account...";
+
+
+    const name =
+        document
+            .getElementById("registerName")
+            .value
+            .trim();
+
+    const email =
+        document
+            .getElementById("registerEmail")
+            .value
+            .trim();
+
+    const password =
+        document
+            .getElementById("registerPassword")
+            .value;
+
+    const referralCode =
+        document
+            .getElementById("referralCode")
+            .value
+            .trim();
+
+
+    try {
+
+        const response =
+            await fetch(
+                API + "/auth/register",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        name,
+                        email,
+                        password,
+
+                        referralCode:
+                            referralCode || null
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Registration failed"
+            );
+
+        }
+
+
+        /*
+         * Save JWT
+         */
+
+        localStorage.setItem(
+            "ventures_token",
+            data.token
+        );
+
+
+        localStorage.setItem(
+            "ventures_user",
+            JSON.stringify(data.user)
+        );
+
+
+        showMessage(
+            "Account created successfully. Redirecting...",
+            "success"
+        );
+
+
+        setTimeout(() => {
+
+            window.location.replace(
+                "/dashboard.html"
+            );
+
+        }, 700);
+
+
+    } catch (error) {
+
+        showMessage(
+            error.message
+        );
+
+        button.disabled = false;
+
+        button.textContent =
+            "Create Account";
+
+    }
+
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+async function loginUser(event) {
+
+    event.preventDefault();
+
+    clearMessage();
+
+    const button =
+        document.getElementById(
+            "loginButton"
+        );
+
+    button.disabled = true;
+
+    button.textContent =
+        "Logging in...";
+
+
+    const email =
+        document
+            .getElementById("loginEmail")
+            .value
+            .trim();
+
+    const password =
+        document
+            .getElementById("loginPassword")
+            .value;
+
+
+    try {
+
+        const response =
+            await fetch(
+                API + "/auth/login",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        email,
+                        password
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Login failed"
+            );
+
+        }
+
+
+        /*
+         * Save JWT
+         */
+
+        localStorage.setItem(
+            "ventures_token",
+            data.token
+        );
+
+
+        localStorage.setItem(
+            "ventures_user",
+            JSON.stringify(data.user)
+        );
+
+
+        showMessage(
+            "Login successful. Redirecting...",
+            "success"
+        );
+
+
+        setTimeout(() => {
+
+            window.location.replace(
+                "/dashboard.html"
+            );
+
+        }, 500);
+
+
+    } catch (error) {
+
+        showMessage(
+            error.message
+        );
+
+        button.disabled = false;
+
+        button.textContent =
+            "Login";
+
+    }
+
+}
+
+
+/* =========================================
+   FORGOT PASSWORD
+========================================= */
+
+async function forgotPassword(event) {
+
+    event.preventDefault();
+
+    clearMessage();
+
+    const button =
+        document.getElementById(
+            "forgotButton"
+        );
+
+    button.disabled = true;
+
+    button.textContent =
+        "Sending...";
+
+
+    const email =
+        document
+            .getElementById("forgotEmail")
+            .value
+            .trim();
+
+
+    try {
+
+        const response =
+            await fetch(
+                API + "/auth/forgot-password",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        email
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to request reset"
+            );
+
+        }
+
+
+        showMessage(
+            data.message ||
+            "If the account exists, reset instructions have been sent.",
+            "success"
+        );
+
+
+    } catch (error) {
+
+        showMessage(
+            error.message
+        );
+
+    } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+            "Request Reset";
+
+    }
+
+}
+
+
+/* =========================================
+   REFERRAL FROM URL
+========================================= */
+
+(function loadReferralCode() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const referral =
+        params.get("ref");
+
+    if (referral) {
+
+        document
+            .getElementById("referralCode")
+            .value = referral;
+
+        showForm("register");
+
+    }
+
+})();
+
+</script>
+
+</body>
+              </html>
