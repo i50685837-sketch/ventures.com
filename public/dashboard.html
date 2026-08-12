@@ -1350,4 +1350,763 @@ body{
         <input
             class="form-input"
             type="number"
+            placeholder="Enter amount"
+            min="1"
+            id="withdrawAmount">
+
+        <button
+            class="action"
+            onclick="requestWithdrawal()">
+            Request Withdrawal
+        </button>
+
+        <p
+            id="withdrawMessage"
+            style="margin-top:15px;color:#86efac;">
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- BONUSES -->
+
+<section
+    id="bonuses"
+    class="page">
+
+    <div class="welcome">
+
+        <h1>
+            Bonuses 🎁
+        </h1>
+
+        <p>
+            View your available Ventures bonuses.
+        </p>
+
+    </div>
+
+    <div class="simple-card">
+
+        <h2>
+            Welcome Bonus
+        </h2>
+
+        <p>
+            Your available bonuses and promotional
+            rewards will appear here.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- REFERRALS -->
+
+<section
+    id="referrals"
+    class="page">
+
+    <div class="welcome">
+
+        <h1>
+            Referrals 👥
+        </h1>
+
+        <p>
+            Invite eligible users to Ventures.
+        </p>
+
+    </div>
+
+    <div class="simple-card">
+
+        <h2>
+            Your Referral Code
+        </h2>
+
+        <input
+            class="form-input"
+            id="referralCode"
+            value="VENTURES"
+            readonly>
+
+        <button
+            class="action"
+            onclick="copyReferral()">
+            Copy Referral Code
+        </button>
+
+        <p id="referralMessage"></p>
+
+    </div>
+
+</section>
+
+
+<!-- NOTIFICATIONS -->
+
+<section
+    id="notifications"
+    class="page">
+
+    <div class="welcome">
+
+        <h1>
+            Notifications 🔔
+        </h1>
+
+        <p>
+            Account and survey notifications.
+        </p>
+
+    </div>
+
+    <div class="simple-card">
+
+        <p id="notificationText">
+            No new notifications.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section
+    id="profile"
+    class="page">
+
+    <div class="welcome">
+
+        <h1>
+            Profile 👤
+        </h1>
+
+        <p>
+            Manage your Ventures account.
+        </p>
+
+    </div>
+
+    <div class="simple-card">
+
+        <h3 id="profileName">
+            User
+        </h3>
+
+        <p id="profileEmail">
+            Email
+        </p>
+
+        <p id="profilePhone">
+            Phone: Not provided
+        </p>
+
+        <p>
+            Account status:
+            <strong style="color:#4ade80;">
+                Verified
+            </strong>
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section
+    id="settings"
+    class="page">
+
+    <div class="welcome">
+
+        <h1>
+            Settings ⚙️
+        </h1>
+
+        <p>
+            Manage your account preferences.
+        </p>
+
+    </div>
+
+    <div class="simple-card">
+
+        <h3>
+            Account Security
+        </h3>
+
+        <p>
+            Keep your Ventures account secure.
+        </p>
+
+        <button
+            class="action"
+            onclick="changePassword()">
+            Change Password
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- SUPPORT -->
+
+<section
+    id="support"
+    class="page">
+
+    <div class="welcome">
+
+        <h1>
+            Help & Support 🆘
+        </h1>
+
+        <p>
+            Need help with Ventures?
+        </p>
+
+    </div>
+
+    <div class="simple-card">
+
+        <h3>
+            Contact Ventures
+        </h3>
+
+        <p>
+            For account, survey or withdrawal
+            support, contact us at:
+        </p>
+
+        <br>
+
+        <a
+            href="mailto:venture@gmail.com"
+            style="color:#4ade80;text-decoration:none;">
+            venture@gmail.com
+        </a>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<script>
+
+/* =========================================
+   HAMBURGER MENU
+========================================= */
+
+function openMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.add("open");
+
+    document
+        .getElementById("overlay")
+        .classList.add("show");
+
+}
+
+
+function closeMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+    document
+        .getElementById("overlay")
+        .classList.remove("show");
+
+}
+
+
+/* =========================================
+   PAGE NAVIGATION
+========================================= */
+
+function showPage(page){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(section){
+
+            section.classList.remove("active");
+
+        });
+
+
+    const selected =
+        document.getElementById(page);
+
+
+    if(selected){
+
+        selected.classList.add("active");
+
+    }
+
+
+    document
+        .querySelectorAll(".menu button")
+        .forEach(function(button){
+
+            button.classList.remove("active");
+
+        });
+
+
+    closeMenu();
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================
+   START SURVEY
+========================================= */
+
+function startSurvey(type){
+
+    window.location.href =
+        "/survey.html?survey=" +
+        encodeURIComponent(type);
+
+}
+
+
+/* =========================================
+   PREMIUM SURVEY
+========================================= */
+
+function premiumSurvey(){
+
+    alert(
+        "🔒 This survey is currently available only to eligible accounts."
+    );
+
+}
+
+
+/* =========================================
+   WITHDRAWAL
+========================================= */
+
+async function requestWithdrawal(){
+
+    const amount =
+        document
+        .getElementById("withdrawAmount")
+        .value;
+
+    const message =
+        document
+        .getElementById("withdrawMessage");
+
+
+    if(!amount || Number(amount) <= 0){
+
+        message.textContent =
+            "Enter a valid withdrawal amount.";
+
+        return;
+
+    }
+
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+
+    if(!token){
+
+        window.location.href =
+            "/login.html";
+
+        return;
+
+    }
+
+
+    message.textContent =
+        "Submitting withdrawal request...";
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/withdraw",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " + token
+                    },
+
+                    body:JSON.stringify({
+                        amount:Number(amount)
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!response.ok){
+
+            message.textContent =
+                data.error ||
+                "Withdrawal request failed.";
+
+            return;
+
+        }
+
+
+        message.textContent =
+            data.message ||
+            "Withdrawal request submitted.";
+
+        document
+            .getElementById("withdrawAmount")
+            .value = "";
+
+
+    }catch(error){
+
+        console.error(error);
+
+        message.textContent =
+            "Unable to connect to server.";
+
+    }
+
+}
+
+
+/* =========================================
+   REFERRAL
+========================================= */
+
+async function copyReferral(){
+
+    const code =
+        document
+        .getElementById("referralCode")
+        .value;
+
+    const message =
+        document
+        .getElementById("referralMessage");
+
+
+    try{
+
+        await navigator.clipboard.writeText(code);
+
+        message.textContent =
+            "Referral code copied.";
+
+    }catch(error){
+
+        message.textContent =
+            "Unable to copy referral code.";
+
+    }
+
+}
+
+
+/* =========================================
+   CHANGE PASSWORD
+========================================= */
+
+function changePassword(){
+
+    window.location.href =
+        "/login.html";
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "ventures_token"
+    );
+
+    window.location.href =
+        "/login.html";
+
+}
+
+
+/* =========================================
+   LOAD AUTHENTICATED USER
+========================================= */
+
+async function loadUser(){
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+
+    if(!token){
+
+        window.location.href =
+            "/login.html";
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/auth/me",
+                {
+                    method:"GET",
+
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if(!response.ok){
+
+            localStorage.removeItem(
+                "ventures_token"
+            );
+
+            window.location.href =
+                "/login.html";
+
+            return;
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const user =
+            data.user || data;
+
+
+        const name =
+            user.name || "User";
+
+        const email =
+            user.email || "No email";
+
+        const phone =
+            user.phone || "Not provided";
+
+
+        document
+            .getElementById("userName")
+            .textContent = name;
+
+
+        document
+            .getElementById("sideName")
+            .textContent = name;
+
+
+        document
+            .getElementById("sideEmail")
+            .textContent = email;
+
+
+        document
+            .getElementById("profileName")
+            .textContent = name;
+
+
+        document
+            .getElementById("profileEmail")
+            .textContent = email;
+
+
+        document
+            .getElementById("profilePhone")
+            .textContent =
+                "Phone: " + phone;
+
+
+    }catch(error){
+
+        console.error(
+            "Authentication error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   LOAD DASHBOARD DATA
+========================================= */
+
+async function loadDashboard(){
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+
+    if(!token) return;
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/dashboard",
+                {
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if(!response.ok){
+
+            return;
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if(data.balance !== undefined){
+
+            document
+                .getElementById("balance")
+                .textContent =
+                    Number(data.balance)
+                    .toFixed(2);
+
+
+            document
+                .getElementById("walletBalance")
+                .textContent =
+                    Number(data.balance)
+                    .toFixed(2);
+
+        }
+
+
+        if(data.totalEarned !== undefined){
+
+            document
+                .getElementById("totalEarned")
+                .textContent =
+                    Number(data.totalEarned)
+                    .toFixed(2);
+
+        }
+
+
+        if(data.pending !== undefined){
+
+            document
+                .getElementById("pending")
+                .textContent =
+                    Number(data.pending)
+                    .toFixed(2);
+
+        }
+
+
+        if(data.completedSurveys !== undefined){
+
+            document
+                .getElementById("completed")
+                .textContent =
+                    data.completedSurveys;
+
+        }
+
+
+    }catch(error){
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   START 
+========================================= */
+
+loadUser();
+
+loadDashboard();
+
+</script>
+
+</body>
+</html>
+
+Important: this completes the file after the exact point visible in your screenshot. Keep everything you already have above line 1354, then paste this continuation underneath it.
+
+Your dashboard will then have the full hamburger navigation:
+
+"🏠 Dashboard → 📋 Surveys → 💰 Wallet → 📈 Earnings → 💳 Withdraw → 🎁 Bonuses → 👥 Referrals → 🔔 Notifications → 👤 Profile → ⚙️ Settings → 🆘 Help & Support → 🚪 Logout"
+
+The next file needed for the survey buttons to actually work is "survey.html", where Shopping opens the shopping questions, Mobile opens mobile questions, Food opens food questions, Entertainment opens entertainment questions, and the countdown runs in seconds.
           
