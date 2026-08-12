@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Ventures | Referrals</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+:root{
+    --bg:#06130c;
+    --panel:#0b1c13;
+    --panel2:#0d2116;
+    --border:#193626;
+    --text:#fff;
+    --muted:#84958b;
+    --green:#4ade80;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+.header{
+    height:65px;
+    background:var(--panel2);
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+}
+
+.menu-btn,
+.notification{
+    width:42px;
+    height:42px;
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    background:var(--panel);
+    color:var(--text);
+
+    font-size:20px;
+    cursor:pointer;
+}
+
+.logo{
+    color:var(--green);
+    font-size:21px;
+    font-weight:bold;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:270px;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:-280px;
+
+    background:var(--panel2);
+    border-right:1px solid var(--border);
+
+    z-index:2000;
+    transition:.3s;
+    overflow-y:auto;
+}
+
+.sidebar.open{
+    left:0;
+}
+
+.sidebar-head{
+    height:65px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    border-bottom:1px solid var(--border);
+}
+
+.close-btn{
+    background:none;
+    border:0;
+    color:var(--muted);
+    font-size:25px;
+    cursor:pointer;
+}
+
+.user-box{
+    margin:18px;
+    padding:15px;
+
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+}
+
+.user-box strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.user-box span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.menu{
+    padding:8px 12px;
+}
+
+.menu-title{
+    color:var(--muted);
+    font-size:11px;
+    margin:15px 8px 8px;
+    text-transform:uppercase;
+}
+
+.menu button{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    gap:13px;
+
+    padding:13px 12px;
+    margin-bottom:4px;
+
+    border:0;
+    border-radius:10px;
+
+    background:transparent;
+    color:var(--text);
+
+    cursor:pointer;
+    text-align:left;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:var(--panel);
+    color:var(--green);
+}
+
+.logout{
+    color:#ef4444 !important;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+
+    display:none;
+    z-index:1500;
+}
+
+.overlay.show{
+    display:block;
+}
+
+/* MAIN */
+
+.main{
+    max-width:1000px;
+    margin:auto;
+    padding:95px 18px 45px;
+}
+
+.title{
+    margin-bottom:22px;
+}
+
+.title h1{
+    font-size:30px;
+    margin-bottom:7px;
+}
+
+.title p{
+    color:var(--muted);
+}
+
+/* REFERRAL HERO */
+
+.referral-card{
+    background:
+        radial-gradient(
+            circle at top right,
+            #1b6135,
+            transparent 45%
+        ),
+        var(--panel2);
+
+    border:1px solid #1d4a2b;
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:18px;
+}
+
+.referral-card h2{
+    margin-bottom:8px;
+}
+
+.referral-card p{
+    color:#9aac9f;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.link-box{
+    display:flex;
+    gap:8px;
+    margin-top:20px;
+}
+
+.link-box input{
+    flex:1;
+
+    min-width:0;
+
+    padding:13px;
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    background:#07170e;
+    color:#fff;
+
+    outline:none;
+}
+
+.copy-btn{
+    padding:0 18px;
+
+    border:0;
+    border-radius:10px;
+
+    background:#16a34a;
+    color:white;
+
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:19px;
+}
+
+.stat small{
+    color:var(--muted);
+}
+
+.stat h2{
+    margin-top:8px;
+}
+
+.green{
+    color:var(--green);
+}
+
+/* INFO */
+
+.info{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.info h2{
+    font-size:19px;
+    margin-bottom:10px;
+}
+
+.info p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* REFERRALS */
+
+.referral-list{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.referral-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:16px;
+
+    border-bottom:1px solid var(--border);
+}
+
+.referral-row:last-child{
+    border-bottom:0;
+}
+
+.person{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#12301d;
+    color:var(--green);
+}
+
+.name{
+    font-weight:bold;
+}
+
+.date{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:4px;
+}
+
+.reward{
+    color:var(--green);
+    font-weight:bold;
+}
+
+.empty{
+    padding:30px;
+    text-align:center;
+    color:var(--muted);
+}
+
+/* MESSAGE */
+
+.message{
+    color:var(--green);
+    font-size:13px;
+    margin-top:10px;
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .link-box{
+        flex-direction:column;
+    }
+
+    .copy-btn{
+        padding:13px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <button
+        class="menu-btn"
+        onclick="openMenu()">
+        ☰
+    </button>
+
+    <div class="logo">
+        ventures.com
+    </div>
+
+    <button
+        class="notification"
+        onclick="goDashboard()">
+        🔔
+    </button>
+
+</header>
+
+
+<!-- SIDEBAR -->
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
+    <div class="sidebar-head">
+
+        <div class="logo">
+            Ventures
+        </div>
+
+        <button
+            class="close-btn"
+            onclick="closeMenu()">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="user-box">
+
+        <strong id="sideName">
+            Loading...
+        </strong>
+
+        <span id="sideEmail">
+            Loading...
+        </span>
+
+    </div>
+
+
+    <div class="menu">
+
+        <div class="menu-title">
+            Main
+        </div>
+
+        <button onclick="goDashboard()">
+            🏠 Dashboard
+        </button>
+
+        <button onclick="goSurveys()">
+            📋 Surveys
+        </button>
+
+
+        <div class="menu-title">
+            Money
+        </div>
+
+        <button onclick="goWallet()">
+            💰 Wallet
+        </button>
+
+        <button onclick="goEarnings()">
+            📈 Earnings
+        </button>
+
+        <button onclick="goWithdraw()">
+            💳 Withdraw
+        </button>
+
+
+        <div class="menu-title">
+            Rewards
+        </div>
+
+        <button onclick="goDashboard()">
+            🎁 Bonuses
+        </button>
+
+        <button class="active">
+            👥 Referrals
+        </button>
+
+
+        <div class="menu-title">
+            Account
+        </div>
+
+        <button onclick="goDashboard()">
+            🔔 Notifications
+        </button>
+
+        <button onclick="goProfile()">
+            👤 Profile
+        </button>
+
+        <button onclick="goSettings()">
+            ⚙️ Settings
+        </button>
+
+
+        <div class="menu-title">
+            Support
+        </div>
+
+        <button onclick="goDashboard()">
+            🆘 Help & Support
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()">
+            🚪 Logout
+        </button>
+
+    </div>
+
+</aside>
+
+
+<div
+    class="overlay"
+    id="overlay"
+    onclick="closeMenu()">
+</div>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="title">
+
+        <h1>
+            Referrals 👥
+        </h1>
+
+        <p>
+            Invite people to Ventures and earn
+            referral rewards when eligible.
+        </p>
+
+    </div>
+
+
+    <!-- REFERRAL LINK -->
+
+    <section class="referral-card">
+
+        <h2>
+            Invite & Earn 🎁
+        </h2>
+
+        <p>
+            Share your personal Ventures referral
+            link with friends. Eligible referral
+            rewards are calculated and credited by
+            the backend.
+        </p>
+
+
+        <div class="link-box">
+
+            <input
+                type="text"
+                id="referralLink"
+                readonly
+                value="Loading referral link...">
+
+            <button
+                class="copy-btn"
+                onclick="copyReferral()">
+
+                Copy
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="message"
+            id="copyMessage">
+        </div>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <small>
+                Total Referrals
+            </small>
+
+            <h2 id="totalReferrals">
+                0
+            </h2>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                Active Referrals
+            </small>
+
+            <h2 id="activeReferrals">
+                0
+            </h2>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                Referral Earnings
+            </small>
+
+            <h2 class="green">
+
+                KES
+                <span id="referralEarnings">
+                    0.00
+                </span>
+
+            </h2>
+
+        </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+
+    <section class="info">
+
+        <h2>
+            How referrals work
+        </h2>
+
+        <p>
+            1. Copy your personal referral link.<br>
+            2. Share it with someone who wants to
+            join Ventures.<br>
+            3. They register through your link.<br>
+            4. When the referral meets the
+            program's eligibility requirements,
+            any applicable reward is processed by
+            the Ventures backend.
+        </p>
+
+    </section>
+
+
+    <!-- REFERRAL LIST -->
+
+    <div class="section-title">
+
+        <h2>
+            Your Referrals
+        </h2>
+
+    </div>
+
+
+    <div
+        class="referral-list"
+        id="referralList">
+
+        <div class="empty">
+            Loading referrals...
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+/* =========================================
+   MENU
+========================================= */
+
+function openMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.add("open");
+
+    document
+        .getElementById("overlay")
+        .classList.add("show");
+
+}
+
+
+function closeMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+    document
+        .getElementById("overlay")
+        .classList.remove("show");
+
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function goDashboard(){
+    window.location.href="/dashboard.html";
+}
+
+function goSurveys(){
+    window.location.href="/surveys.html";
+}
+
+function goWallet(){
+    window.location.href="/wallet.html";
+}
+
+function goEarnings(){
+    window.location.href="/earnings.html";
+}
+
+function goWithdraw(){
+    window.location.href="/withdraw.html";
+}
+
+function goProfile(){
+    window.location.href="/profile.html";
+}
+
+function goSettings(){
+    window.location.href="/settings.html";
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "ventures_token"
+    );
+
+    window.location.href="/login.html";
+
+}
+
+
+/* =========================================
+   COPY LINK
+========================================= */
+
+async function copyReferral(){
+
+    const input =
+        document.getElementById(
+            "referralLink"
+        );
+
+    try{
+
+        await navigator.clipboard.writeText(
+            input.value
+        );
+
+        document
+            .getElementById(
+                "copyMessage"
+            )
+            .textContent =
+                "Referral link copied!";
+
+        setTimeout(function(){
+
+            document
+                .getElementById(
+                    "copyMessage"
+                )
+                .textContent="";
+
+        },2500);
+
+    }catch(error){
+
+        input.select();
+
+        document.execCommand("copy");
+
+        document
+            .getElementById(
+                "copyMessage"
+            )
+            .textContent =
+                "Referral link copied!";
+
+    }
+
+}
+
+
+/* =========================================
+   LOAD REFERRALS
+========================================= */
+
+async function loadReferrals(){
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+
+    if(!token){
+
+        window.location.href="/login.html";
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/referrals",
+                {
+                    method:"GET",
+
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if(!response.ok){
+
+            if(response.status===401){
+
+                logout();
+                return;
+
+            }
+
+            throw new Error(
+                "Referral request failed"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /*
+         * Example:
+         *
+         * {
+         *   referralCode:"MORDE123",
+         *   totalReferrals:5,
+         *   activeReferrals:3,
+         *   referralEarnings:450,
+         *   referrals:[]
+         * }
+         */
+
+
+        const code =
+            data.referralCode ||
+            data.code;
+
+
+        if(code){
+
+            document
+                .getElementById(
+                    "referralLink"
+                )
+                .value =
+                    window.location.origin +
+                    "/register.html?ref=" +
+                    encodeURIComponent(code);
+
+        }
+
+
+        document
+            .getElementById(
+                "totalReferrals"
+            )
+            .textContent =
+                data.totalReferrals || 0;
+
+
+        document
+            .getElementById(
+                "activeReferrals"
+            )
+            .textContent =
+                data.activeReferrals || 0;
+
+
+        document
+            .getElementById(
+                "referralEarnings"
+            )
+            .textContent =
+                Number(
+                    data.referralEarnings || 0
+                ).toFixed(2);
+
+
+        renderReferrals(
+            data.referrals || []
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        document
+            .getElementById(
+                "referralList"
+            )
+            .innerHTML = `
+                <div class="empty">
+                    Unable to load referrals.
+                </div>
+            `;
+
+    }
+
+}
+
+
+/* =========================================
+   RENDER REFERRALS
+========================================= */
+
+function renderReferrals(list){
+
+    const container =
+        document.getElementById(
+            "referralList"
+        );
+
+
+    if(!list.length){
+
+        container.innerHTML = `
+            <div class="empty">
+                You don't have any referrals yet.
+                <br><br>
+                Share your referral link to get started.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML="";
+
+
+    list
+        .slice(0,30)
+        .forEach(function(ref){
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "referral-row";
+
+
+            const name =
+                ref.name ||
+                "Ventures Member";
+
+
+            const date =
+                ref.createdAt
+                ? new Date(
+                    ref.createdAt
+                  ).toLocaleDateString()
+                : "Recent";
+
+
+            const reward =
+                Number(
+                    ref.reward || 0
+                ).toFixed(2);
+
+
+            row.innerHTML = `
+
+                <div class="person">
+
+                    <div class="avatar">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <div class="name">
+                            ${escapeHTML(name)}
+                        </div>
+
+                        <div class="date">
+                            Joined ${escapeHTML(date)}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="reward">
+                    KES ${reward}
+                </div>
+
+            `;
+
+
+            container.appendChild(row);
+
+        });
+
+}
+
+
+/* =========================================
+   LOAD USER
+========================================= */
+
+async function loadUser(){
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+
+    if(!token){
+
+        window.location.href="/login.html";
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/auth/me",
+                {
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if(!response.ok){
+
+            logout();
+            return;
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const user =
+            data.user || data;
+
+
+        document
+            .getElementById(
+                "sideName"
+            )
+            .textContent =
+                user.name || "User";
+
+
+        document
+            .getElementById(
+                "sideEmail"
+            )
+            .textContent =
+                user.email || "";
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================================
+   SAFE HTML
+========================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+loadUser();
+
+loadReferrals();
+
+</script>
+
+</body>
+  </html>
