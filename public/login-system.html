@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ventures.com - Authentication</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #06130c;
+      color: white;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .card {
+      background: #0b1c13;
+      border: 1px solid #183526;
+      border-radius: 22px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo h1 {
+      font-size: 30px;
+      color: #4ade80;
+    }
+
+    .logo p {
+      color: #91a39a;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 25px;
+      background: #07110b;
+      padding: 5px;
+      border-radius: 12px;
+    }
+
+    .tabs button {
+      flex: 1;
+      border: none;
+      padding: 12px;
+      border-radius: 9px;
+      background: transparent;
+      color: #8ea095;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tabs button.active {
+      background: #16a34a;
+      color: white;
+    }
+
+    .form {
+      display: none;
+    }
+
+    .form.active {
+      display: block;
+    }
+
+    h2 {
+      margin-bottom: 8px;
+    }
+
+    .description {
+      color: #8ea095;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      font-size: 13px;
+      color: #b8c5bd;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #294334;
+      background: #07110b;
+      color: white;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #22c55e;
+    }
+
+    .submit {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      border: none;
+      border-radius: 11px;
+      background: #16a34a;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .submit:hover {
+      background: #15803d;
+    }
+
+    .forgot {
+      display: block;
+      text-align: right;
+      margin-top: 10px;
+      color: #4ade80;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-size: 13px;
+      text-align: center;
+      color: #86efac;
+    }
+
+    .contact {
+      text-align: center;
+      margin-top: 25px;
+      color: #78887e;
+      font-size: 13px;
+    }
+
+    .contact a {
+      color: #4ade80;
+      text-decoration: none;
+    }
+
+    .back {
+      background: none;
+      border: none;
+      color: #4ade80;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    @media(max-width:480px) {
+      .card {
+        padding: 24px 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="card">
+
+    <div class="logo">
+      <h1>ventures.com</h1>
+      <p>Earn by completing surveys</p>
+    </div>
+
+    <div class="tabs">
+      <button id="loginTab"
+              class="active"
+              onclick="showForm('login')">
+        Login
+      </button>
+
+      <button id="registerTab"
+              onclick="showForm('register')">
+        Register
+      </button>
+    </div>
+
+    <!-- LOGIN -->
+
+    <form id="loginForm" class="form active">
+
+      <h2>Welcome back</h2>
+
+      <p class="description">
+        Login to access your Ventures dashboard.
+      </p>
+
+      <label>Email</label>
+      <input
+        type="email"
+        id="loginEmail"
+        placeholder="Enter your email"
+        required
+      >
+
+      <label>Password</label>
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="Enter your password"
+        required
+      >
+
+      <span
+        class="forgot"
+        onclick="showForgot()">
+        Forgot password?
+      </span>
+
+      <button class="submit" type="submit">
+        Login
+      </button>
+
+      <div id="loginMessage" class="message"></div>
+
+    </form>
+
+
+    <!-- REGISTER -->
+
+    <form id="registerForm" class="form">
+
+      <h2>Create account</h2>
+
+      <p class="description">
+        Register and start earning from surveys.
+      </p>
+
+      <label>Full Name</label>
+      <input
+        type="text"
+        id="registerName"
+        placeholder="Your full name"
+        required
+      >
+
+      <label>Email</label>
+      <input
+        type="email"
+        id="registerEmail"
+        placeholder="you@example.com"
+        required
+      >
+
+      <label>Password</label>
+      <input
+        type="password"
+        id="registerPassword"
+        placeholder="Create a password"
+        minlength="8"
+        required
+      >
+
+      <label>Confirm Password</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        placeholder="Confirm password"
+        minlength="8"
+        required
+      >
+
+      <button class="submit" type="submit">
+        Create Account
+      </button>
+
+      <div id="registerMessage" class="message"></div>
+
+    </form>
+
+
+    <!-- FORGOT PASSWORD -->
+
+    <form id="forgotForm" class="form">
+
+      <h2>Reset password</h2>
+
+      <p class="description">
+        Enter your email and we'll send instructions
+        to reset your password.
+      </p>
+
+      <label>Email</label>
+
+      <input
+        type="email"
+        id="forgotEmail"
+        placeholder="Enter your email"
+        required
+      >
+
+      <button class="submit" type="submit">
+        Send Reset Link
+      </button>
+
+      <div id="forgotMessage" class="message"></div>
+
+      <button
+        type="button"
+        class="back"
+        onclick="showForm('login')">
+        ← Back to Login
+      </button>
+
+    </form>
+
+    <div class="contact">
+      Need help?
+      <a href="mailto:venture@gmail.com">
+        venture@gmail.com
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function showForm(form) {
+
+  document
+    .querySelectorAll(".form")
+    .forEach(x => x.classList.remove("active"));
+
+  document
+    .querySelectorAll(".tabs button")
+    .forEach(x => x.classList.remove("active"));
+
+  if (form === "login") {
+
+    document
+      .getElementById("loginForm")
+      .classList.add("active");
+
+    document
+      .getElementById("loginTab")
+      .classList.add("active");
+
+  }
+
+  if (form === "register") {
+
+    document
+      .getElementById("registerForm")
+      .classList.add("active");
+
+    document
+      .getElementById("registerTab")
+      .classList.add("active");
+
+  }
+
+}
+
+
+function showForgot() {
+
+  document
+    .querySelectorAll(".form")
+    .forEach(x => x.classList.remove("active"));
+
+  document
+    .getElementById("forgotForm")
+    .classList.add("active");
+
+}
+
+
+document
+  .getElementById("registerForm")
+  .addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    const name =
+      document.getElementById("registerName").value;
+
+    const email =
+      document.getElementById("registerEmail").value;
+
+    const password =
+      document.getElementById("registerPassword").value;
+
+    const confirm =
+      document.getElementById("confirmPassword").value;
+
+    const message =
+      document.getElementById("registerMessage");
+
+    if (password !== confirm) {
+
+      message.textContent =
+        "Passwords do not match.";
+
+      return;
+
+    }
+
+    message.textContent =
+      "Creating account...";
+
+    try {
+
+      const response = await fetch(
+        "/api/auth/register",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            name,
+            email,
+            password
+          })
+        }
+      );
+
+      const data =
+        await response.json();
+
+      message.textContent =
+        data.message || data.error;
+
+      if (response.ok) {
+
+        setTimeout(() => {
+          showForm("login");
+        }, 1500);
+
+      }
+
+    } catch (error) {
+
+      message.textContent =
+        "Unable to connect to server.";
+
+    }
+
+  });
+
+
+document
+  .getElementById("loginForm")
+  .addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    const email =
+      document.getElementById("loginEmail").value;
+
+    const password =
+      document.getElementById("loginPassword").value;
+
+    const message =
+      document.getElementById("loginMessage");
+
+    message.textContent =
+      "Logging in...";
+
+    try {
+
+      const response = await fetch(
+        "/api/auth/login",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            email,
+            password
+          })
+        }
+      );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+
+        message.textContent =
+          data.error;
+
+        return;
+
+      }
+
+      localStorage.setItem(
+        "ventures_token",
+        data.token
+      );
+
+      window.location.href =
+        "/dashboard.html";
+
+    } catch (error) {
+
+      message.textContent =
+        "Unable to connect to server.";
+
+    }
+
+  });
+
+
+document
+  .getElementById("forgotForm")
+  .addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    const email =
+      document.getElementById("forgotEmail").value;
+
+    const message =
+      document.getElementById("forgotMessage");
+
+    message.textContent =
+      "Sending...";
+
+    try {
+
+      const response = await fetch(
+        "/api/auth/forgot-password",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            email
+          })
+        }
+      );
+
+      const data =
+        await response.json();
+
+      message.textContent =
+        data.message || data.error;
+
+    } catch (error) {
+
+      message.textContent =
+        "Unable to connect to server.";
+
+    }
+
+  });
+
+</script>
+
+</body>
+</html>
