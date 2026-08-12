@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Ventures | Bonuses</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+:root{
+    --bg:#06130c;
+    --panel:#0b1c13;
+    --panel2:#0d2116;
+    --border:#193626;
+    --text:#fff;
+    --muted:#84958b;
+    --green:#4ade80;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+.header{
+    height:65px;
+    background:var(--panel2);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+}
+
+.menu-btn,
+.notification{
+    width:42px;
+    height:42px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--panel);
+    color:var(--text);
+    font-size:20px;
+    cursor:pointer;
+}
+
+.logo{
+    color:var(--green);
+    font-size:21px;
+    font-weight:bold;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:270px;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:-280px;
+    background:var(--panel2);
+    border-right:1px solid var(--border);
+    z-index:2000;
+    transition:.3s;
+    overflow-y:auto;
+}
+
+.sidebar.open{
+    left:0;
+}
+
+.sidebar-head{
+    height:65px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    border-bottom:1px solid var(--border);
+}
+
+.close-btn{
+    background:none;
+    border:0;
+    color:var(--muted);
+    font-size:25px;
+    cursor:pointer;
+}
+
+.user-box{
+    margin:18px;
+    padding:15px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+}
+
+.user-box strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.user-box span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.menu{
+    padding:8px 12px;
+}
+
+.menu-title{
+    color:var(--muted);
+    font-size:11px;
+    margin:15px 8px 8px;
+    text-transform:uppercase;
+}
+
+.menu button{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:13px 12px;
+    margin-bottom:4px;
+    border:0;
+    border-radius:10px;
+    background:transparent;
+    color:var(--text);
+    cursor:pointer;
+    text-align:left;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:var(--panel);
+    color:var(--green);
+}
+
+.logout{
+    color:#ef4444 !important;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    z-index:1500;
+}
+
+.overlay.show{
+    display:block;
+}
+
+/* MAIN */
+
+.main{
+    max-width:1050px;
+    margin:auto;
+    padding:95px 18px 45px;
+}
+
+.title{
+    margin-bottom:22px;
+}
+
+.title h1{
+    font-size:30px;
+    margin-bottom:7px;
+}
+
+.title p{
+    color:var(--muted);
+}
+
+/* BONUS HERO */
+
+.bonus-hero{
+    background:
+        radial-gradient(
+            circle at top right,
+            #1b6135,
+            transparent 45%
+        ),
+        var(--panel2);
+
+    border:1px solid #1d4a2b;
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:18px;
+}
+
+.bonus-hero h2{
+    margin-bottom:8px;
+}
+
+.bonus-hero p{
+    color:#9aac9f;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.bonus-balance{
+    margin-top:18px;
+    font-size:32px;
+    font-weight:bold;
+    color:var(--green);
+}
+
+/* CARDS */
+
+.bonus-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.bonus-card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:20px;
+}
+
+.bonus-icon{
+    width:48px;
+    height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:13px;
+    background:#12301d;
+    font-size:23px;
+    margin-bottom:14px;
+}
+
+.bonus-card h3{
+    margin-bottom:7px;
+}
+
+.bonus-card p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
+}
+
+.reward{
+    color:var(--green);
+    font-size:20px;
+    font-weight:bold;
+    margin:14px 0;
+}
+
+.claim-btn{
+    width:100%;
+    padding:12px;
+    border:0;
+    border-radius:10px;
+    background:#16a34a;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.claim-btn:disabled{
+    background:#263c2e;
+    color:#718278;
+    cursor:not-allowed;
+}
+
+/* HISTORY */
+
+.section-title{
+    margin:25px 0 14px;
+}
+
+.history{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.history-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px;
+    border-bottom:1px solid var(--border);
+}
+
+.history-row:last-child{
+    border-bottom:0;
+}
+
+.history-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.history-icon{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:11px;
+    background:#102a19;
+}
+
+.history-name{
+    font-weight:bold;
+}
+
+.history-date{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:4px;
+}
+
+.history-amount{
+    color:var(--green);
+    font-weight:bold;
+}
+
+.empty{
+    padding:30px;
+    text-align:center;
+    color:var(--muted);
+}
+
+.message{
+    color:var(--green);
+    font-size:13px;
+    margin-top:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+    .bonus-grid{
+        grid-template-columns:1fr;
+    }
+
+    .bonus-balance{
+        font-size:28px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <button
+        class="menu-btn"
+        onclick="openMenu()">
+        ☰
+    </button>
+
+    <div class="logo">
+        ventures.com
+    </div>
+
+    <button
+        class="notification"
+        onclick="goDashboard()">
+        🔔
+    </button>
+
+</header>
+
+
+<!-- SIDEBAR -->
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
+    <div class="sidebar-head">
+
+        <div class="logo">
+            Ventures
+        </div>
+
+        <button
+            class="close-btn"
+            onclick="closeMenu()">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="user-box">
+
+        <strong id="sideName">
+            Loading...
+        </strong>
+
+        <span id="sideEmail">
+            Loading...
+        </span>
+
+    </div>
+
+
+    <div class="menu">
+
+        <div class="menu-title">
+            Main
+        </div>
+
+        <button onclick="goDashboard()">
+            🏠 Dashboard
+        </button>
+
+        <button onclick="goSurveys()">
+            📋 Surveys
+        </button>
+
+
+        <div class="menu-title">
+            Money
+        </div>
+
+        <button onclick="goWallet()">
+            💰 Wallet
+        </button>
+
+        <button onclick="goEarnings()">
+            📈 Earnings
+        </button>
+
+        <button onclick="goWithdraw()">
+            💳 Withdraw
+        </button>
+
+
+        <div class="menu-title">
+            Rewards
+        </div>
+
+        <button class="active">
+            🎁 Bonuses
+        </button>
+
+        <button onclick="goReferrals()">
+            👥 Referrals
+        </button>
+
+
+        <div class="menu-title">
+            Account
+        </div>
+
+        <button onclick="goDashboard()">
+            🔔 Notifications
+        </button>
+
+        <button onclick="goProfile()">
+            👤 Profile
+        </button>
+
+        <button onclick="goSettings()">
+            ⚙️ Settings
+        </button>
+
+
+        <div class="menu-title">
+            Support
+        </div>
+
+        <button onclick="goDashboard()">
+            🆘 Help & Support
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()">
+            🚪 Logout
+        </button>
+
+    </div>
+
+</aside>
+
+
+<div
+    class="overlay"
+    id="overlay"
+    onclick="closeMenu()">
+</div>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="title">
+
+        <h1>
+            Bonuses 🎁
+        </h1>
+
+        <p>
+            Complete eligible activities and
+            collect available Ventures bonuses.
+        </p>
+
+    </div>
+
+
+    <!-- BONUS BALANCE -->
+
+    <section class="bonus-hero">
+
+        <h2>
+            Bonus Balance
+        </h2>
+
+        <p>
+            Bonuses credited to your account are
+            controlled and verified by the Ventures
+            backend.
+        </p>
+
+        <div class="bonus-balance">
+            KES
+            <span id="bonusBalance">
+                0.00
+            </span>
+        </div>
+
+    </section>
+
+
+    <!-- BONUS TYPES -->
+
+    <section class="bonus-grid">
+
+
+        <!-- DAILY -->
+
+        <div class="bonus-card">
+
+            <div class="bonus-icon">
+                🎁
+            </div>
+
+            <h3>
+                Daily Bonus
+            </h3>
+
+            <p>
+                Check in each day to see whether
+                today's bonus is available.
+            </p>
+
+            <div class="reward">
+                KES <span id="dailyReward">0</span>
+            </div>
+
+            <button
+                class="claim-btn"
+                id="dailyBtn"
+                onclick="claimBonus('daily')">
+
+                Claim Bonus
+
+            </button>
+
+        </div>
+
+
+        <!-- SURVEY -->
+
+        <div class="bonus-card">
+
+            <div class="bonus-icon">
+                📋
+            </div>
+
+            <h3>
+                Survey Bonus
+            </h3>
+
+            <p>
+                Complete eligible surveys and
+                receive any promotional bonus
+                assigned to them.
+            </p>
+
+            <div class="reward">
+                Available after eligible survey
+            </div>
+
+            <button
+                class="claim-btn"
+                onclick="goSurveys()">
+
+                View Surveys
+
+            </button>
+
+        </div>
+
+
+        <!-- REFERRAL -->
+
+        <div class="bonus-card">
+
+            <div class="bonus-icon">
+                👥
+            </div>
+
+            <h3>
+                Referral Bonus
+            </h3>
+
+            <p>
+                Invite people to Ventures and earn
+                eligible referral rewards.
+            </p>
+
+            <div class="reward">
+                Referral rewards
+            </div>
+
+            <button
+                class="claim-btn"
+                onclick="goReferrals()">
+
+                Invite Friends
+
+            </button>
+
+        </div>
+
+
+        <!-- SPECIAL -->
+
+        <div class="bonus-card">
+
+            <div class="bonus-icon">
+                ⭐
+            </div>
+
+            <h3>
+                Special Bonus
+            </h3>
+
+            <p>
+                Occasionally available promotions
+                may appear here.
+            </p>
+
+            <div class="reward">
+                Check availability
+            </div>
+
+            <button
+                class="claim-btn"
+                id="specialBtn"
+                onclick="claimBonus('special')">
+
+                Check Bonus
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <div
+        class="message"
+        id="message">
+    </div>
+
+
+    <!-- HISTORY -->
+
+    <div class="section-title">
+
+        <h2>
+            Bonus History
+        </h2>
+
+    </div>
+
+
+    <div
+        class="history"
+        id="history">
+
+        <div class="empty">
+            Loading bonus history...
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+/* =========================================
+   MENU
+========================================= */
+
+function openMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.add("open");
+
+    document
+        .getElementById("overlay")
+        .classList.add("show");
+
+}
+
+function closeMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+    document
+        .getElementById("overlay")
+        .classList.remove("show");
+
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function goDashboard(){
+    window.location.href="/dashboard.html";
+}
+
+function goSurveys(){
+    window.location.href="/surveys.html";
+}
+
+function goWallet(){
+    window.location.href="/wallet.html";
+}
+
+function goEarnings(){
+    window.location.href="/earnings.html";
+}
+
+function goWithdraw(){
+    window.location.href="/withdraw.html";
+}
+
+function goReferrals(){
+    window.location.href="/referral.html";
+}
+
+function goProfile(){
+    window.location.href="/profile.html";
+}
+
+function goSettings(){
+    window.location.href="/settings.html";
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "ventures_token"
+    );
+
+    window.location.href="/login.html";
+
+}
+
+
+/* =========================================
+   CLAIM BONUS
+========================================= */
+
+async function claimBonus(type){
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+    if(!token){
+
+        window.location.href="/login.html";
+        return;
+
+    }
+
+
+    const button =
+        type === "daily"
+        ? document.getElementById("dailyBtn")
+        : document.getElementById("specialBtn");
+
+
+    button.disabled=true;
+    button.textContent="Checking...";
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/bonuses/claim",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " + token
+                    },
+
+                    body:JSON.stringify({
+                        type:type
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!response.ok){
+
+            throw new Error(
+                data.message ||
+                "Bonus is not available."
+            );
+
+        }
+
+
+        showMessage(
+            data.message ||
+            "Bonus claimed successfully."
+        );
+
+
+        loadBonuses();
+
+
+    }catch(error){
+
+        showMessage(
+            error.message
+        );
+
+        button.disabled=false;
+        button.textContent =
+            type === "daily"
+            ? "Claim Bonus"
+            : "Check Bonus";
+
+    }
+
+}
+
+
+/* =========================================
+   LOAD BONUSES
+========================================= */
+
+async function loadBonuses(){
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+
+    if(!token){
+
+        window.location.href="/login.html";
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/bonuses",
+                {
+                    method:"GET",
+
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if(!response.ok){
+
+            if(response.status===401){
+
+                logout();
+                return;
+
+            }
+
+            throw new Error(
+                "Unable to load bonuses."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        document
+            .getElementById(
+                "bonusBalance"
+            )
+            .textContent =
+                Number(
+                    data.bonusBalance || 0
+                ).toFixed(2);
+
+
+        document
+            .getElementById(
+                "dailyReward"
+            )
+            .textContent =
+                Number(
+                    data.dailyReward || 0
+                ).toFixed(2);
+
+
+        const dailyButton =
+            document.getElementById(
+                "dailyBtn"
+            );
+
+
+        if(data.dailyAvailable === false){
+
+            dailyButton.disabled=true;
+
+            dailyButton.textContent =
+                data.dailyMessage ||
+                "Already Claimed";
+
+        }else{
+
+            dailyButton.disabled=false;
+
+            dailyButton.textContent =
+                "Claim Bonus";
+
+        }
+
+
+        renderHistory(
+            data.history || []
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        document
+            .getElementById(
+                "history"
+            )
+            .innerHTML=`
+                <div class="empty">
+                    Unable to load bonus history.
+                </div>
+            `;
+
+    }
+
+}
+
+
+/* =========================================
+   HISTORY
+========================================= */
+
+function renderHistory(items){
+
+    const container =
+        document.getElementById(
+            "history"
+        );
+
+
+    if(!items.length){
+
+        container.innerHTML=`
+            <div class="empty">
+                No bonus history yet.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML="";
+
+
+    items
+        .slice(0,30)
+        .forEach(function(item){
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "history-row";
+
+
+            const title =
+                item.name ||
+                item.type ||
+                "Bonus";
+
+
+            const amount =
+                Number(
+                    item.amount || 0
+                ).toFixed(2);
+
+
+            const date =
+                item.createdAt
+                ? new Date(
+                    item.createdAt
+                  ).toLocaleString()
+                : "Recent";
+
+
+            row.innerHTML=`
+
+                <div class="history-left">
+
+                    <div class="history-icon">
+                        🎁
+                    </div>
+
+                    <div>
+
+                        <div class="history-name">
+                            ${escapeHTML(title)}
+                        </div>
+
+                        <div class="history-date">
+                            ${escapeHTML(date)}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="history-amount">
+                    + KES ${amount}
+                </div>
+
+            `;
+
+
+            container.appendChild(row);
+
+        });
+
+}
+
+
+/* =========================================
+   USER
+========================================= */
+
+async function loadUser(){
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+
+    if(!token){
+
+        window.location.href="/login.html";
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/auth/me",
+                {
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if(!response.ok){
+
+            logout();
+            return;
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const user =
+            data.user || data;
+
+
+        document
+            .getElementById(
+                "sideName"
+            )
+            .textContent =
+                user.name || "User";
+
+
+        document
+            .getElementById(
+                "sideEmail"
+            )
+            .textContent =
+                user.email || "";
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(text){
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+    message.textContent=text;
+
+    setTimeout(function(){
+
+        message.textContent="";
+
+    },3000);
+
+}
+
+
+/* =========================================
+   SAFE HTML
+========================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* ==============================
