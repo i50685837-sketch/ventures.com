@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ventures.com | Earn Through Surveys</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #06130c;
+      color: white;
+    }
+
+    nav {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7%;
+      border-bottom: 1px solid #183526;
+      background: rgba(6,19,12,.9);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #4ade80;
+    }
+
+    nav button {
+      border: 1px solid #285236;
+      background: #0b1c13;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .hero {
+      min-height: calc(100vh - 70px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 50px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glow {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: #16a34a;
+      filter: blur(150px);
+      opacity: .13;
+      border-radius: 50%;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 30px;
+      background: #0d2818;
+      border: 1px solid #1d5130;
+      color: #86efac;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 8vw, 78px);
+      line-height: 1;
+      margin-bottom: 22px;
+    }
+
+    h1 span {
+      color: #4ade80;
+    }
+
+    .hero p {
+      max-width: 620px;
+      margin: auto;
+      color: #9aaba1;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .primary,
+    .secondary {
+      padding: 15px 25px;
+      border-radius: 11px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .primary {
+      background: #16a34a;
+      color: white;
+      border: none;
+    }
+
+    .primary:hover {
+      background: #15803d;
+      transform: translateY(-2px);
+    }
+
+    .secondary {
+      background: #0b1c13;
+      color: white;
+      border: 1px solid #294334;
+    }
+
+    .features {
+      max-width: 1050px;
+      margin: -30px auto 80px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      padding: 25px;
+      background: #0b1c13;
+      border: 1px solid #183526;
+      border-radius: 17px;
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .feature h3 {
+      margin-bottom: 9px;
+    }
+
+    .feature p {
+      color: #899a90;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    footer {
+      border-top: 1px solid #183526;
+      padding: 30px 20px;
+      text-align: center;
+      color: #75847b;
+      font-size: 13px;
+    }
+
+    footer a {
+      color: #4ade80;
+      text-decoration: none;
+    }
+
+    @media(max-width:700px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 46px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+
+  <div class="logo">
+    ventures.com
+  </div>
+
+  <button onclick="openLogin()">
+    Login
+  </button>
+
+</nav>
+
+
+<section class="hero">
+
+  <div class="glow"></div>
+
+  <div class="hero-content">
+
+    <div class="badge">
+      Earn rewards by sharing your opinions
+    </div>
+
+    <h1>
+      Get started with
+      <span>Venture</span>
+    </h1>
+
+    <p>
+      Complete surveys, share your opinions,
+      and earn money through Ventures.
+      Create your account and start exploring
+      available surveys today.
+    </p>
+
+    <div class="buttons">
+
+      <button
+        class="primary"
+        onclick="getStarted()">
+        Get Started →
+      </button>
+
+      <button
+        class="secondary"
+        onclick="openLogin()">
+        Login
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="features">
+
+  <div class="feature">
+
+    <div class="feature-icon">📋</div>
+
+    <h3>Complete Surveys</h3>
+
+    <p>
+      Find available surveys and complete
+      eligible ones to earn rewards.
+    </p>
+
+  </div>
+
+
+  <div class="feature">
+
+    <div class="feature-icon">💰</div>
+
+    <h3>Earn Rewards</h3>
+
+    <p>
+      Your eligible survey rewards are
+      added to your Ventures account.
+    </p>
+
+  </div>
+
+
+  <div class="feature">
+
+    <div class="feature-icon">🔐</div>
+
+    <h3>Secure Account</h3>
+
+    <p>
+      Your account is protected by
+      authenticated backend sessions.
+    </p>
+
+  </div>
+
+</section>
+
+
+<footer>
+
+  <p>
+    © 2026 ventures.com ·
+    <a href="mailto:venture@gmail.com">
+      venture@gmail.com
+    </a>
+  </p>
+
+</footer>
+
+
+<script>
+
+function getStarted() {
+  window.location.href = "/login.html";
+}
+
+function openLogin() {
+  window.location.href = "/login.html";
+}
+
+</script>
+
+</body>
+  </html>
