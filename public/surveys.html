@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ventures | Surveys</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#06130c;
+    color:#fff;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+    height:65px;
+    background:#0a1b12;
+    border-bottom:1px solid #193626;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+
+    z-index:1000;
+}
+
+.menu-btn{
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#11281a;
+    color:white;
+
+    font-size:22px;
+    cursor:pointer;
+}
+
+.logo{
+    color:#4ade80;
+    font-size:21px;
+    font-weight:bold;
+}
+
+.notification{
+    width:40px;
+    height:40px;
+
+    border:1px solid #264532;
+    border-radius:10px;
+
+    background:#0d2116;
+    color:white;
+
+    cursor:pointer;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:270px;
+
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:-280px;
+
+    background:#08180f;
+    border-right:1px solid #1a3827;
+
+    z-index:2000;
+
+    transition:.3s;
+
+    overflow-y:auto;
+}
+
+.sidebar.open{
+    left:0;
+}
+
+.sidebar-head{
+    height:65px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    border-bottom:1px solid #1a3827;
+}
+
+.close-btn{
+    background:none;
+    border:none;
+    color:#aaa;
+
+    font-size:23px;
+    cursor:pointer;
+}
+
+.user-box{
+    margin:18px;
+
+    padding:15px;
+
+    background:#0d2116;
+
+    border:1px solid #1d3b29;
+
+    border-radius:14px;
+}
+
+.user-box strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.user-box span{
+    color:#7f9186;
+    font-size:12px;
+}
+
+.menu{
+    padding:8px 12px;
+}
+
+.menu-title{
+    color:#607368;
+    font-size:11px;
+
+    margin:15px 8px 8px;
+
+    text-transform:uppercase;
+}
+
+.menu button{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    gap:13px;
+
+    padding:13px 12px;
+
+    margin-bottom:4px;
+
+    border:none;
+    border-radius:10px;
+
+    background:transparent;
+    color:#c6d0ca;
+
+    cursor:pointer;
+    text-align:left;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:#12301d;
+    color:#4ade80;
+}
+
+.logout{
+    color:#f87171 !important;
+}
+
+/* OVERLAY */
+
+.overlay{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.55);
+
+    display:none;
+
+    z-index:1500;
+}
+
+.overlay.show{
+    display:block;
+}
+
+
+/* MAIN */
+
+.main{
+    max-width:1100px;
+
+    margin:auto;
+
+    padding:95px 18px 40px;
+}
+
+
+/* PAGE TITLE */
+
+.title{
+    margin-bottom:25px;
+}
+
+.title h1{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#84958b;
+    line-height:1.6;
+}
+
+
+/* SURVEY GRID */
+
+.surveys{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:16px;
+}
+
+
+/* SURVEY CARD */
+
+.survey{
+    background:#0b1c13;
+
+    border:1px solid #193626;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    transition:.2s;
+}
+
+.survey:hover{
+    transform:translateY(-3px);
+
+    border-color:#28603b;
+}
+
+.survey-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    margin-bottom:15px;
+}
+
+.icon{
+    width:50px;
+    height:50px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:#102a19;
+
+    font-size:26px;
+}
+
+.reward{
+    color:#4ade80;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.survey h2{
+    font-size:19px;
+    margin-bottom:8px;
+}
+
+.description{
+    color:#84958b;
+    font-size:13px;
+
+    line-height:1.6;
+
+    min-height:42px;
+}
+
+.info{
+    display:flex;
+
+    gap:15px;
+
+    margin:16px 0;
+
+    color:#9aaa9f;
+
+    font-size:12px;
+}
+
+.start{
+    width:100%;
+
+    padding:13px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#16a34a;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.start:hover{
+    background:#15803d;
+}
+
+
+/* PREMIUM */
+
+.premium{
+    border-color:#443a21;
+}
+
+.premium .icon{
+    background:#2a2518;
+}
+
+.premium .start{
+    background:#28241b;
+    color:#e4c56b;
+}
+
+.lock{
+    color:#e4c56b;
+    font-size:11px;
+
+    margin-top:8px;
+}
+
+
+/* DAILY NOTICE */
+
+.notice{
+    margin-top:25px;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    background:#0b1c13;
+
+    border:1px solid #193626;
+
+    color:#9aaa9f;
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .surveys{
+        grid-template-columns:1fr;
+    }
+
+    .title h1{
+        font-size:26px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <button
+        class="menu-btn"
+        onclick="openMenu()">
+        ☰
+    </button>
+
+    <div class="logo">
+        ventures.com
+    </div>
+
+    <button
+        class="notification"
+        onclick="goDashboard()">
+        🔔
+    </button>
+
+</header>
+
+
+<!-- SIDEBAR -->
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
+    <div class="sidebar-head">
+
+        <div class="logo">
+            Ventures
+        </div>
+
+        <button
+            class="close-btn"
+            onclick="closeMenu()">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="user-box">
+
+        <strong id="sideName">
+            Loading...
+        </strong>
+
+        <span id="sideEmail">
+            Loading...
+        </span>
+
+    </div>
+
+
+    <div class="menu">
+
+        <div class="menu-title">
+            Main
+        </div>
+
+        <button
+            onclick="goDashboard()">
+            🏠 Dashboard
+        </button>
+
+        <button
+            class="active">
+            📋 Surveys
+        </button>
+
+
+        <div class="menu-title">
+            Money
+        </div>
+
+        <button onclick="goDashboard()">
+            💰 Wallet
+        </button>
+
+        <button onclick="goDashboard()">
+            📈 Earnings
+        </button>
+
+        <button onclick="goDashboard()">
+            💳 Withdraw
+        </button>
+
+
+        <div class="menu-title">
+            Rewards
+        </div>
+
+        <button onclick="goDashboard()">
+            🎁 Bonuses
+        </button>
+
+        <button onclick="goDashboard()">
+            👥 Referrals
+        </button>
+
+
+        <div class="menu-title">
+            Account
+        </div>
+
+        <button onclick="goDashboard()">
+            🔔 Notifications
+        </button>
+
+        <button onclick="goDashboard()">
+            👤 Profile
+        </button>
+
+        <button onclick="goDashboard()">
+            ⚙️ Settings
+        </button>
+
+
+        <div class="menu-title">
+            Support
+        </div>
+
+        <button onclick="goDashboard()">
+            🆘 Help & Support
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()">
+            🚪 Logout
+        </button>
+
+    </div>
+
+</aside>
+
+
+<div
+    class="overlay"
+    id="overlay"
+    onclick="closeMenu()">
+</div>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+    <div class="title">
+
+        <h1>
+            Available Surveys 📋
+        </h1>
+
+        <p>
+            Complete surveys, share your opinions,
+            and earn rewards.
+        </p>
+
+    </div>
+
+
+    <div class="surveys">
+
+
+        <!-- SHOPPING -->
+
+        <div class="survey">
+
+            <div class="survey-top">
+
+                <div class="icon">
+                    🛒
+                </div>
+
+                <div class="reward">
+                    KES 150
+                </div>
+
+            </div>
+
+            <h2>
+                Shopping Habits
+            </h2>
+
+            <p class="description">
+                Tell us about your shopping habits,
+                preferences and purchasing decisions.
+            </p>
+
+            <div class="info">
+
+                <span>
+                    ⏱ 5 min
+                </span>
+
+                <span>
+                    ❓ 5 questions
+                </span>
+
+            </div>
+
+            <button
+                class="start"
+                onclick="startSurvey('shopping')">
+
+                Start Survey →
+
+            </button>
+
+        </div>
+
+
+        <!-- MOBILE -->
+
+        <div class="survey">
+
+            <div class="survey-top">
+
+                <div class="icon">
+                    📱
+                </div>
+
+                <div class="reward">
+                    KES 180
+                </div>
+
+            </div>
+
+            <h2>
+                Mobile & Apps
+            </h2>
+
+            <p class="description">
+                Share your experience with mobile
+                applications and digital services.
+            </p>
+
+            <div class="info">
+
+                <span>
+                    ⏱ 7 min
+                </span>
+
+                <span>
+                    ❓ 7 questions
+                </span>
+
+            </div>
+
+            <button
+                class="start"
+                onclick="startSurvey('mobile')">
+
+                Start Survey →
+
+            </button>
+
+        </div>
+
+
+        <!-- FOOD -->
+
+        <div class="survey">
+
+            <div class="survey-top">
+
+                <div class="icon">
+                    🍔
+                </div>
+
+                <div class="reward">
+                    KES 200
+                </div>
+
+            </div>
+
+            <h2>
+                Food Preferences
+            </h2>
+
+            <p class="description">
+                Tell us about food preferences,
+                shopping and dining habits.
+            </p>
+
+            <div class="info">
+
+                <span>
+                    ⏱ 8 min
+                </span>
+
+                <span>
+                    ❓ 8 questions
+                </span>
+
+            </div>
+
+            <button
+                class="start"
+                onclick="startSurvey('food')">
+
+                Start Survey →
+
+            </button>
+
+        </div>
+
+
+        <!-- ENTERTAINMENT -->
+
+        <div class="survey">
+
+            <div class="survey-top">
+
+                <div class="icon">
+                    🎮
+                </div>
+
+                <div class="reward">
+                    KES 250
+                </div>
+
+            </div>
+
+            <h2>
+                Entertainment
+            </h2>
+
+            <p class="description">
+                Tell us about movies, games,
+                music and entertainment.
+            </p>
+
+            <div class="info">
+
+                <span>
+                    ⏱ 10 min
+                </span>
+
+                <span>
+                    ❓ 10 questions
+                </span>
+
+            </div>
+
+            <button
+                class="start"
+                onclick="startSurvey('entertainment')">
+
+                Start Survey →
+
+            </button>
+
+        </div>
+
+
+        <!-- PREMIUM FINANCE -->
+
+        <div class="survey premium">
+
+            <div class="survey-top">
+
+                <div class="icon">
+                    🏦
+                </div>
+
+                <div class="reward">
+                    KES 350
+                </div>
+
+            </div>
+
+            <h2>
+                Finance Research 🔒
+            </h2>
+
+            <p class="description">
+                Research about banking, payments
+                and financial services.
+            </p>
+
+            <div class="info">
+
+                <span>
+                    ⏱ 12 min
+                </span>
+
+                <span>
+                    🔒 Premium
+                </span>
+
+            </div>
+
+            <button
+                class="start"
+                onclick="premiumSurvey()">
+
+                🔒 Eligibility Required
+
+            </button>
+
+            <div class="lock">
+                Available to eligible accounts
+            </div>
+
+        </div>
+
+
+        <!-- PREMIUM TRANSPORT -->
+
+        <div class="survey premium">
+
+            <div class="survey-top">
+
+                <div class="icon">
+                    🚗
+                </div>
+
+                <div class="reward">
+                    KES 450
+                </div>
+
+            </div>
+
+            <h2>
+                Transport Study 🔒
+            </h2>
+
+            <p class="description">
+                Share your transportation and
+                commuting experiences.
+            </p>
+
+            <div class="info">
+
+                <span>
+                    ⏱ 15 min
+                </span>
+
+                <span>
+                    🔒 Premium
+                </span>
+
+            </div>
+
+            <button
+                class="start"
+                onclick="premiumSurvey()">
+
+                🔒 Eligibility Required
+
+            </button>
+
+            <div class="lock">
+                Available to eligible accounts
+            </div>
+
+        </div>
+
+
+        <!-- PREMIUM TECHNOLOGY -->
+
+        <div class="survey premium">
+
+            <div class="survey-top">
+
+                <div class="icon">
+                    💻
+                </div>
+
+                <div class="reward">
+                    KES 600
+                </div>
+
+            </div>
+
+            <h2>
+                Technology Research 🔒
+            </h2>
+
+            <p class="description">
+                Share your opinions about
+                technology and digital products.
+            </p>
+
+            <div class="info">
+
+                <span>
+                    ⏱ 18 min
+                </span>
+
+                <span>
+                    🔒 Premium
+                </span>
+
+            </div>
+
+            <button
+                class="start"
+                onclick="premiumSurvey()">
+
+                🔒 Eligibility Required
+
+            </button>
+
+            <div class="lock">
+                Available to eligible accounts
+            </div>
+
+        </div>
+
+
+        <!-- PREMIUM ENVIRONMENT -->
+
+        <div class="survey premium">
+
+            <div class="survey-top">
+
+                <div class="icon">
+                    🌱
+                </div>
+
+                <div class="reward">
+                    KES 750
+                </div>
+
+            </div>
+
+            <h2>
+                Environment Study 🔒
+            </h2>
+
+            <p class="description">
+                Research about environmental
+                awareness and sustainable habits.
+            </p>
+
+            <div class="info">
+
+                <span>
+                    ⏱ 20 min
+                </span>
+
+                <span>
+                    🔒 Premium
+                </span>
+
+            </div>
+
+            <button
+                class="start"
+                onclick="premiumSurvey()">
+
+                🔒 Eligibility Required
+
+            </button>
+
+            <div class="lock">
+                Available to eligible accounts
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        ♻️ <strong>Daily survey cycle:</strong>
+        Once you finish a survey, it is marked
+        completed for the current day. Eligible
+        surveys can become available again during
+        the next daily cycle.
+
+    </div>
+
+
+</main>
+
+
+<script>
+
+/* MENU */
+
+function openMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.add("open");
+
+    document
+        .getElementById("overlay")
+        .classList.add("show");
+
+}
+
+
+function closeMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+    document
+        .getElementById("overlay")
+        .classList.remove("show");
+
+}
+
+
+/* DASHBOARD */
+
+function goDashboard(){
+
+    window.location.href =
+        "/dashboard.html";
+
+}
+
+
+/* START SURVEY */
+
+function startSurvey(type){
+
+    window.location.href =
+        "/survey.html?survey=" +
+        encodeURIComponent(type);
+
+}
+
+
+/* PREMIUM */
+
+function premiumSurvey(){
+
+    alert(
+        "🔒 This survey is currently available only to eligible accounts."
+    );
+
+}
+
+
+/* LOGOUT */
+
+function logout(){
+
+    localStorage.removeItem(
+        "ventures_token"
+    );
+
+    window.location.href =
+        "/login.html";
+
+}
+
+
+/* AUTHENTICATED USER */
+
+async function loadUser(){
+
+    const token =
+        localStorage.getItem(
+            "ventures_token"
+        );
+
+
+    if(!token){
+
+        window.location.href =
+            "/login.html";
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/auth/me",
+                {
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if(!response.ok){
+
+            logout();
+
+            return;
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const user =
+            data.user || data;
+
+
+        document
+            .getElementById("sideName")
+            .textContent =
+                user.name || "User";
+
+
+        document
+            .getElementById("sideEmail")
+            .textContent =
+                user.email || "";
+
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+loadUser();
+
+</script>
+
+</body>
+</html>
+
+Save it as:
+
+public/surveys.html
+
+Then the flow is:
+
+Dashboard → Surveys → Shopping Habits → "survey.html?survey=shopping"
+
+and the same applies to Mobile, Food, and Entertainment. The higher-value surveys remain locked behind backend-controlled eligibility.
