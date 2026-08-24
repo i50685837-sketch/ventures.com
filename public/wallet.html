@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Deposit — Ventures</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .card {
+            background: #111;
+            border: 1px solid #292929;
+            border-radius: 22px;
+            padding: 28px 22px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.5);
+        }
+
+        .top {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 14px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            color: #000;
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        h1 {
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            color: #999;
+            font-size: 14px;
+        }
+
+        label {
+            display: block;
+            margin: 18px 0 8px;
+            color: #ddd;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        input {
+            width: 100%;
+            height: 52px;
+            border: 1px solid #333;
+            border-radius: 12px;
+            background: #080808;
+            color: #fff;
+            padding: 0 15px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #fff;
+        }
+
+        .hint {
+            margin-top: 7px;
+            color: #777;
+            font-size: 12px;
+        }
+
+        button {
+            width: 100%;
+            height: 54px;
+            margin-top: 24px;
+            border: 0;
+            border-radius: 13px;
+            background: #fff;
+            color: #000;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+            margin-top: 18px;
+            padding: 13px;
+            border-radius: 11px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .success {
+            display: block;
+            background: #102015;
+            border: 1px solid #245c31;
+            color: #9beaab;
+        }
+
+        .error {
+            display: block;
+            background: #241010;
+            border: 1px solid #642525;
+            color: #ff9b9b;
+        }
+
+        .info {
+            display: block;
+            background: #111b25;
+            border: 1px solid #263f55;
+            color: #9dceff;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back:hover {
+            color: #fff;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="top">
+
+            <div class="logo">
+                M
+            </div>
+
+            <h1>Deposit Funds</h1>
+
+            <div class="subtitle">
+                Pay securely using M-PESA
+            </div>
+
+        </div>
+
+
+        <form id="depositForm">
+
+            <label for="phone">
+                M-PESA Phone Number
+            </label>
+
+            <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="0712345678"
+                autocomplete="tel"
+                required
+            >
+
+            <div class="hint">
+                Example: 0712345678 or +254712345678
+            </div>
+
+
+            <label for="amount">
+                Amount (KES)
+            </label>
+
+            <input
+                type="number"
+                id="amount"
+                name="amount"
+                min="1"
+                step="1"
+                placeholder="100"
+                required
+            >
+
+
+            <button
+                type="submit"
+                id="depositBtn"
+            >
+                Deposit with M-PESA
+            </button>
+
+        </form>
+
+
+        <div
+            id="message"
+            class="message">
+        </div>
+
+
+        <a
+            href="/dashboard.html"
+            class="back">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const form =
+    document.getElementById("depositForm");
+
+const button =
+    document.getElementById("depositBtn");
+
+const message =
+    document.getElementById("message");
+
+
+function showMessage(
+    text,
+    type
+) {
+
+    message.textContent = text;
+
+    message.className =
+        "message " + type;
+
+}
+
+
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const phone =
+            document.getElementById("phone")
+                .value
+                .trim();
+
+        const amount =
+            Number(
+                document.getElementById("amount")
+                    .value
+            );
+
+
+        if (!phone) {
+
+            showMessage(
+                "Enter your M-PESA phone number.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!Number.isInteger(amount) ||
+            amount < 1) {
+
+            showMessage(
+                "Enter a valid deposit amount.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        button.disabled = true;
+
+        button.textContent =
+            "Sending STK Push...";
+
+
+        showMessage(
+            "Connecting to M-PESA...",
+            "info"
+        );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/mpesa/stkpush",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            phone: phone,
+
+                            amount: amount,
+
+                            accountReference:
+                                "VENTURES",
+
+                            transactionDesc:
+                                "Ventures Deposit"
+
+                        })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok ||
+                !data.success) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to start payment."
+                );
+
+            }
+
+
+            const result =
+                data.data || {};
+
+
+            showMessage(
+
+                result.CustomerMessage ||
+                "STK Push sent. Check your phone and complete the M-PESA payment.",
+
+                "success"
+
+            );
+
+
+            form.reset();
+
+
+        } catch (error) {
+
+            console.error(
+                "Deposit error:",
+                error
+            );
+
+
+            showMessage(
+                error.message ||
+                "Payment request failed.",
+                "error"
+            );
+
+        } finally {
+
+            button.disabled = false;
+
+            button.textContent =
+                "Deposit with M-PESA";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+  </html>
